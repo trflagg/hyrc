@@ -1,0 +1,19 @@
+{
+  "name": "hyrc",
+  "version": "1.0.0",
+  "description": "React and express app for creating your own interactive adventureworlds.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trflagg/hyrc.git"
+  },
+  "author": "Taylor Flagg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trflagg/hyrc/issues"
+  },
+  "homepage": "https://github.com/trflagg/hyrc#readme"
+}

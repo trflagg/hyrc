@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/trflagg/hyrc/issues"
   },
-  "homepage": "https://github.com/trflagg/hyrc#readme"
+  "homepage": "https://github.com/trflagg/hyrc#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }

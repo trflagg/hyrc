@@ -8,4 +8,9 @@ services:
       - '.:/usr/src/app'
     environment:
       NODE_ENV: development
+      DB_ENV: compose
     command: nodemon -L app.js 
+  mongo:
+    image: "mongo:3.4.7"
+    ports:
+      - "27017:27017"

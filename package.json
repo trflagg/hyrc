@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/trflagg/hyrc#readme",
   "dependencies": {
+    "argieDB": "https://github.com/trflagg/argiedb",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

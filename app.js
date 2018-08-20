@@ -1,11 +1,16 @@
 const path = require('path');
 const express = require('express');
 
+const graphqlHTTP = require('express-graphql');
+
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.dev.js');
 
 const Db = require('argieDB/db');
+
+const graphQLSchema = require('./graphql/schema');
+const graphQLRoot = require('./graphql/root');
 
 const app = express()
 
@@ -31,12 +36,20 @@ if (process.env.NODE_ENV !== 'production') {
 // serve static files out of /dist
 app.use(express.static('dist'));
 
+
+const useGraphiQL = (process.env.NODE_ENV !== 'development');
+console.log(graphQLRoot);
+app.use('/graphql', graphqlHTTP({
+  schema: graphQLSchema,
+  rootValue: graphQLRoot,
+  graphiql: true,
+}));
+
 // handler
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
-
-
+//app.get('/', (req, res) => {
+  //res.sendFile(path.join(__dirname, 'views', 'index.html'));
+//});
+//
 let port = 3000
 if (process.env.NODE_ENV === 'production') {
   port = 80;

@@ -18,6 +18,20 @@
   },
   "homepage": "https://github.com/trflagg/hyrc#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
+    "webpack": "^4.16.5",
+    "webpack-merge": "^4.1.4"
+  },
+  "devDependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-hot-loader": "^4.3.4",
+    "webpack-dev-middleware": "^3.1.3"
   }
 }

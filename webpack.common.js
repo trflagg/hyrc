@@ -4,7 +4,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: /\.js$/,
         include: [
           path.resolve(__dirname, 'client/js/'),
         ],

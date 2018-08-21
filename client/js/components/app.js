@@ -5,12 +5,12 @@ import store from '../store';
 
 import style from '../../sass/main.scss';
 
-import HelloString from './helloString';
+import Header from './header';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <HelloString />
+      <Header />
     </Provider>
   );
 }

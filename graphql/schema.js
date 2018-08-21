@@ -1,7 +1,7 @@
+const requireText = require('require-text');
 const { buildSchema } = require('graphql');
 
-module.exports = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
+const schema = requireText('./schema.txt', require);
+
+console.log(schema);
+module.exports = buildSchema(schema);

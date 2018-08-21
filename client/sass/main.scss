@@ -1,3 +1,8 @@
-p {
-  color: grey;
+@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates:200');
+
+h1 {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 35px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
 }

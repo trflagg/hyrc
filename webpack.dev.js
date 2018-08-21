@@ -7,10 +7,15 @@ const commonWebpackConfig = require('./webpack.common');
 module.exports = Merge(commonWebpackConfig, {
   mode: 'development',
   entry: {
-    main: './client/js/main.js',
+    main: ['webpack-hot-middleware/client', './client/js/main.js'],
   },
   devtool: 'inline-source-map',
+  devServer: {
+    hot: true,
+  },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
     filename: '[name].bundle.js',

@@ -5,6 +5,7 @@ const graphqlHTTP = require('express-graphql');
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackConfig = require('./webpack.dev.js');
 
 const Db = require('argieDB/db');
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
   }));
+  app.use(webpackHotMiddleware(compiler));
 }
 
 // serve static files out of /dist

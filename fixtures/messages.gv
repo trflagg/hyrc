@@ -1,2 +1,3 @@
 digraph messages {
+INIT_MESSAGE2 -> INIT_MESSAGE3;
 }

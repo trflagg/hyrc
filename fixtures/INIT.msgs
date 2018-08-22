@@ -1,3 +1,13 @@
 # INIT
 Hello World
 This is a new message
+
+#--
+# MESSAGE2
+This is message 2
+
+<%= avatar.addMessage('Message3', 'INIT_MESSAGE3') %>
+
+#--
+# MESSAGE3
+This is message 3

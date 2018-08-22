@@ -1,16 +1,12 @@
 
-module.exports = {
-  hello: () => {
-    return 'Hello world!';
-  },
-  messageList: () => {
-    return [
-      { name: 'hello' },
-      { name: 'taylor' },
-    ];
-  },
-  Message: {
-    name: root => root.name,
-    text: root => root.text,
-  }
+module.exports = db => {
+
+  const messageResolvers = require('./resolvers/messages')(db);
+
+  return {
+    hello: () => {
+      return 'Hello world!';
+    },
+    ...messageResolvers,
+  };
 }

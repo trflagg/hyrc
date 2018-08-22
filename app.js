@@ -12,7 +12,6 @@ const webpackConfig = require('./webpack.dev.js');
 const Db = require('argieDB/db');
 
 const graphQLSchema = require('./graphql/schema.js');
-const graphQLRoot = require('./graphql/root.js');
 
 const app = express()
 
@@ -47,11 +46,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // handler
-const useGraphiQL = (process.env.NODE_ENV !== 'development');
+const graphQLRoot = require('./graphql/root.js')(db);
+const useGraphiQL = (process.env.NODE_ENV !== 'production');
 app.use('/graphql', graphqlHTTP({
   schema: graphQLSchema,
   rootValue: graphQLRoot,
-  graphiql: useGraphiQL,
+  graphiql: true,
   pretty: true,
 }));
 

@@ -1,8 +1,57 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates:200');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates');
 
-h1 {
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 35px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid gray;
+// color scheme inspiration:
+// https://coolors.co/5c9afe-ffee6c-ffadc9-f28500-75dc94
+$maize: #FFEE6C;
+$cornflower-blue: #5C9AFE;
+$carnation-pink: #FFADC9;
+$tangerine: #F28500;
+$pastel-green: #75DC94;
+
+body {
+  margin: 0px;
+}
+
+#pageContainer {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 10px;
+
+  h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 35px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+    margin: 0px
+  }
+}
+
+#content {
+  flex: 1;
+}
+
+footer {
+  margin: 0px;
+  background-color: #EEE;
+  padding: 10px;
+
+  button {
+    padding: 10px;
+    font-weight: 300;
+    font-family: 'Montserrat', sans-serif;
+    background: #FFF;
+    border-color: #444;
+    color: #444;
+    font-size: large;
+  }
+
+  button:hover {
+    background: $cornflower-blue;
+    color: #FFF;
+    border-color: #FFF;
+  }
 }

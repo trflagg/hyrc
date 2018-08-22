@@ -7,11 +7,16 @@ import store from '../store';
 import style from '../../sass/main.scss';
 
 import Header from './header';
+import FooterControls from './footer-controls';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Header />
+      <div id="pageContainer">
+        <Header />
+        <div id="content" />
+        <FooterControls />
+      </div>
     </Provider>
   );
 }

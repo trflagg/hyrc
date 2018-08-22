@@ -8,7 +8,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const commonWebpackConfig = require('./webpack.common.js');
 
 module.exports = Merge(commonWebpackConfig, {
-  mode: 'productin',
+  mode: 'production',
   entry: {
     main: './client/js/main.js',
   },

@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
 import helloString from './helloString';
+import messages from './messages';
 
 const root = combineReducers({
-  helloString
+  helloString,
+  messages,
 });
 
 module.exports = root;

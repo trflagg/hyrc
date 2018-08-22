@@ -3,13 +3,15 @@ import thunk from 'redux-thunk';
 
 import reducer from './reducers';
 
-const initialState = {
-  helloString: '',
+let middleware = [thunk];
+if (process.env.NODE_ENV === 'development') {
+  const logger = require('redux-logger').default;
+  middleware = [...middleware, logger];
 }
 
 const store = createStore(
   reducer,
-  applyMiddleware(thunk)
+  applyMiddleware(...middleware)
 );
 
 export default store;

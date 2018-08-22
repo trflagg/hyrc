@@ -1,24 +1,39 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { hot } from 'react-hot-loader';
-
-import store from '../store';
+import { connect } from 'react-redux';
 
 import style from '../../sass/main.scss';
 
+import { fetchAllMessages } from '../actions/messages';
+
 import Header from './header';
+import MessageList from './message-list';
 import FooterControls from './footer-controls';
 
-const App = () => {
-  return (
-    <Provider store={store}>
+class App extends React.Component {
+
+  componentDidMount() {
+    this.props.fetchAllMessages();
+  }
+
+  render() {
+    return (
       <div id="pageContainer">
         <Header />
-        <div id="content" />
+        <div id="content">
+          <MessageList />
+        </div>
         <FooterControls />
       </div>
-    </Provider>
-  );
+    )
+  };
 }
 
-export default hot(module)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAllMessages: () => { dispatch(fetchAllMessages()) },
+  }
+}
+
+const AppConnected = connect(null, mapDispatchToProps)(App);
+export default AppConnected;
+

@@ -18,7 +18,7 @@ export function fetchHelloString() {
   });
 };
 
-function wrap(fn) {
+export function wrap(fn) {
   return function(dispatch) {
     fn(dispatch).catch(error => dispatch({ type: 'ERROR', error }));
   };

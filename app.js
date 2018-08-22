@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 
 const graphqlHTTP = require('express-graphql');
+const morgan = require('morgan');
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -38,13 +39,20 @@ if (process.env.NODE_ENV !== 'production') {
 // serve static files out of /dist
 app.use(express.static('dist'));
 
+// logging
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan('short'));
+} else {
+  app.use(morgan('dev'));
+}
 
 // handler
 const useGraphiQL = (process.env.NODE_ENV !== 'development');
 app.use('/graphql', graphqlHTTP({
   schema: graphQLSchema,
   rootValue: graphQLRoot,
-  graphiql: true,
+  graphiql: useGraphiQL,
+  pretty: true,
 }));
 
 app.get('/', (req, res) => {

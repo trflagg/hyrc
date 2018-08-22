@@ -1,3 +1,9 @@
 type Query {
   hello: String
+  messageList: [Message]!
+}
+
+type Message {
+  name: String!
+  text: String
 }

@@ -12,7 +12,7 @@ export function fetchAllMessages() {
     const data = await runQuery(`
       {
         messageList {
-        title
+          name
         }
       }
     `);

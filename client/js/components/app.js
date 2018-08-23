@@ -9,6 +9,9 @@ import Header from './header';
 import MessageList from './message-list';
 import FooterControls from './footer-controls';
 
+// for testing only. Will replace with messageList
+import Editor from './editor';
+
 class App extends React.Component {
 
   componentDidMount() {
@@ -19,9 +22,7 @@ class App extends React.Component {
     return (
       <div id="pageContainer">
         <Header />
-        <div id="content">
-          <MessageList />
-        </div>
+          <Editor />
         <FooterControls />
       </div>
     )

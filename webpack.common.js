@@ -15,6 +15,16 @@ module.exports = {
         ]
       },
       {
+        test: /\.css$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader", options: {
+            sourceMap: true
+          }
+        }],
+      },
+      {
         test: /\.scss$/,
         include: [
           path.resolve(__dirname, 'client/sass/'),

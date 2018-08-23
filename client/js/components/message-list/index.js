@@ -1,25 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { selectMessage } from '../../actions/messages';
+
 import Message from './message';
 
 class MessageList extends React.Component {
+  handleMessageClick = message => {
+    this.props.selectMessage(message);
+  }
+
   render() {
-    const { messageList } = this.props;
+    const { messageList, selectedMessage } = this.props;
     return (
       <div id='messageList'>
         {messageList && messageList.map(message => (
-          <Message key={message.name} message={message} />
+          <Message
+            key={message.name}
+            message={message}
+            onClick={() => this.handleMessageClick(message)}
+            selected={selectedMessage && selectedMessage.name === message.name}
+          />
         ))}
       </div>
     );
   }
 }
 
-const mapStateToProps = props => {
+const mapStateToProps = state => {
   return {
-    messageList: props.messages.messageList,
+    messageList: state.messages.messageList,
+    selectedMessage: state.messages.selectedMessage,
   };
 }
 
-export default connect(mapStateToProps)(MessageList);
+const mapDispatchToProps = dispatch => {
+  return {
+    selectMessage: message => dispatch(selectMessage(message))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

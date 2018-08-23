@@ -1,9 +1,10 @@
 import { produce } from 'immer';
 
-import { SET_MESSAGE_LIST } from '../actions/messages';
+import { SELECT_MESSAGE, SET_MESSAGE_LIST } from '../actions/messages';
 
 const initialState = {
   messageList: [],
+  selectedMessage: null,
 };
 
 const messages = produce((draft, action) =>  {
@@ -11,6 +12,8 @@ const messages = produce((draft, action) =>  {
     case SET_MESSAGE_LIST:
       draft.messageList = action.messageList;
       return;
+    case SELECT_MESSAGE:
+      draft.selectedMessage = action.message;
   }
 }, initialState);
 

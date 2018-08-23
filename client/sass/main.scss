@@ -8,6 +8,9 @@ $carnation-pink: #FFADC9;
 $tangerine: #F28500;
 $pastel-green: #75DC94;
 
+$lightgrey: #EEE;
+$middlegrey: #555;
+
 body {
   margin: 0px;
 }
@@ -30,20 +33,40 @@ header {
   }
 }
 
+p {
+  font-family: 'Montserrat', sans-serif;
+}
+
 #content {
   flex: 1;
 
   #messageList {
-    .message {
-      font-family: 'Montserrat', sans-serif;
+    p.message {
       font-size: 30px;
-      color: #555;
+      color: $middlegrey;
       margin: 0px;
 
       &:hover {
         cursor: pointer;
         font-size: 35px;
         color: #000;
+        background: $lightgrey;
+      }
+    }
+
+    p.selected {
+      font-size: 35px;
+      color: #000;
+    }
+
+    div.selected {
+      padding: 10px;
+
+      textarea {
+        width: 100%;
+        border: 0px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px;
       }
     }
   }

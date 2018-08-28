@@ -29,6 +29,22 @@ p {
   font-size: 30px;
 }
 
+button {
+  padding: 10px;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  background: #FFF;
+  border-color: #444;
+  color: #444;
+  font-size: large;
+
+  &:hover {
+    background: $cornflower-blue;
+    color: #FFF;
+    border-color: #FFF;
+  }
+}
+
 #content {
   flex: 1;
   padding: 10px;
@@ -48,19 +64,4 @@ footer {
   background-color: #EEE;
   padding: 10px;
 
-  button {
-    padding: 10px;
-    font-weight: 300;
-    font-family: 'Montserrat', sans-serif;
-    background: #FFF;
-    border-color: #444;
-    color: #444;
-    font-size: large;
-  }
-
-  button:hover {
-    background: $cornflower-blue;
-    color: #FFF;
-    border-color: #FFF;
-  }
 }

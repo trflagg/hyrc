@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { saveMessage } from '../../actions/messages';
+
 import Editor from '../editor';
 
 require('./selected-message.scss');
@@ -9,12 +11,21 @@ class SelectedMessage extends React.Component {
   constructor(props) {
     super(props);
     this.editorRef = React.createRef();
+    this.nameInputRef = React.createRef();
   }
 
   componentDidUpdate() {
     if (this.editorRef.current) {
+      this.nameInputRef.current.value = this.props.selectedMessage.name;
       this.editorRef.current.setText(this.props.selectedMessage.text);
     }
+  }
+
+  handleSave = () => {
+    this.props.saveMessage({
+      name: this.nameInputRef.current.value,
+      text: this.editorRef.current.getText(),
+    });
   }
 
   render() {
@@ -26,7 +37,11 @@ class SelectedMessage extends React.Component {
       <div id='selectedMessage'>
         <div className='field'>
           <p className='field-name'>name</p>
-          <input className='field-value' value={ selectedMessage.name } />
+          <input
+            ref={ this.nameInputRef }
+            className='field-value'
+            defaultValue={ selectedMessage.name }
+          />
         </div>
         <div className='field'>
           <p className='field-name'>text</p>
@@ -37,6 +52,11 @@ class SelectedMessage extends React.Component {
             />
           </div>
         </div>
+        <div id="message-button-bar">
+          <button onClick={this.handleSave}>
+            Save Message
+          </button>
+        </div>
       </div>
     );
   }
@@ -44,9 +64,14 @@ class SelectedMessage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    messageList: state.messages.messageList,
     selectedMessage: state.messages.selectedMessage,
   };
 }
 
-export default connect(mapStateToProps)(SelectedMessage);
+const mapDispatchToProps = dispatch => {
+  return {
+    saveMessage: message => dispatch(saveMessage(message))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedMessage);

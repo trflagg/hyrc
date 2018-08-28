@@ -30,6 +30,10 @@ class Editor extends React.Component {
     }
   }
 
+  getText = () => {
+    return this.quill.getText();
+  }
+
   setText = text => {
     this.quill.setText(text.trimStart().trimEnd());
   }

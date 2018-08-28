@@ -25,3 +25,18 @@ export function fetchAllMessages() {
     dispatch(setMessageList(data.messageList));
   });
 }
+
+export function saveMessage(message) {
+  return wrap(async dispatch => {
+    const query = `
+      mutation CreateOrUpdateMessage($message: MessageInput!) {
+        createOrUpdateMessage(message: $message) {
+          name
+        }
+      }
+    `;
+    const variables = { message };
+    await runQuery(query, variables);
+    return null;
+  });
+}

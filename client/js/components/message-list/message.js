@@ -14,11 +14,6 @@ const Message = ({ message, onClick, selected }) => {
       <p className={classes} onClick={onClick}>
         {message.name}
       </p>
-      {selected &&
-        <Editor
-          defaultValue={message.text}
-        />
-      }
     </div>
   );
 };

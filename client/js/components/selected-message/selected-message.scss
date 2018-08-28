@@ -1,0 +1,21 @@
+@import '../../../sass/colors.scss';
+
+#selectedMessage {
+  flex: 3;
+  height: inherit;
+  overflow-y: scroll;
+
+  .field {
+    .field-name {
+      font-size: 12px;
+      width: 100%;
+    }
+  }
+
+  input {
+    font-family: 'Montserrat';
+    font-size: 30px;
+    width: 100%;
+  }
+
+}

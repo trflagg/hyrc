@@ -1,8 +1,16 @@
 @import '../../../sass/colors.scss';
 
 #editor-container {
-  height: 100px;
 }
+
+#editor {
+  height: inherit;
+
+  .ql-editor {
+    height: inherit;
+  }
+}
+
 
 .argie-tag {
   background: $carnation-pink;

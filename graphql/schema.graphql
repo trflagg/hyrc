@@ -7,3 +7,14 @@ type Message {
   name: String!
   text: String
 }
+
+input MessageInput {
+  name: String!
+  text: String!
+}
+
+type Mutation {
+  createMessage(message: MessageInput!): Message!
+  updateMessage(message: MessageInput!): Message!
+  createOrUpdateMessage(message: MessageInput!): Message!
+}

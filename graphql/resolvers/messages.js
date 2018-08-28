@@ -5,17 +5,34 @@ module.exports = db => {
     messageList: async () => {
       const messageList = await argieMessageHandlers.loadAllMessages();
       return messageList.map(message => {
-        return {
-          name: message.getName(),
-          text: message.getText(),
-        };
+        return objectToClient(message)
       });
     },
 
-    Message: {
-      name: root => root.name,
-      text: root => root.text,
+    createMessage: async req => {
+      const newMessage = await argieMessageHandlers.createMessage(req.message);
+      return objectToClient(newMessage);
     },
+
+    updateMessage: async req => {
+      const updatedMessage =
+        await argieMessageHandlers.updateMessage(req.message);
+      return objectToClient(updatedMessage);
+    },
+
+    createOrUpdateMessage: async req => {
+      const newMessage =
+        await argieMessageHandlers.createOrUpdateMessage(req.message);
+      return objectToClient(newMessage);
+    },
+
   };
   return resolvers;
+}
+
+function objectToClient(message) {
+  return {
+    name: message.getName(),
+    text: message.getText(),
+  }
 }

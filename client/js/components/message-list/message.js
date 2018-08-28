@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames';
 
+import Editor from '../editor';
+
 const Message = ({ message, onClick, selected }) => {
   const classes = classNames({
     'message': true,
@@ -13,11 +15,9 @@ const Message = ({ message, onClick, selected }) => {
         {message.name}
       </p>
       {selected &&
-        <div className={'selected'}>
-          <textarea
-            value={message.text}
-          />
-        </div>
+        <Editor
+          defaultValue={message.text}
+        />
       }
     </div>
   );

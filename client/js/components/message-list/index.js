@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { selectMessage } from '../../actions/messages';
 
+require('./message-list.scss');
 import Message from './message';
 
 class MessageList extends React.Component {

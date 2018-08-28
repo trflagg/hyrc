@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,700i|Montserrat+Alternates');
 
-// color scheme inspiration:
-// https://coolors.co/5c9afe-ffee6c-ffadc9-f28500-75dc94
-$maize: #FFEE6C;
-$cornflower-blue: #5C9AFE;
-$carnation-pink: #FFADC9;
-$tangerine: #F28500;
-$pastel-green: #75DC94;
-
-$lightgrey: #EEE;
-$middlegrey: #555;
+@import './colors.scss';
 
 body {
   margin: 0px;
@@ -40,55 +31,6 @@ p {
 
 #content {
   flex: 1;
-
-  #messageList {
-    p.message {
-      font-size: 30px;
-      color: $middlegrey;
-      margin: 0px;
-
-      &:hover {
-        cursor: pointer;
-        font-size: 35px;
-        color: #000;
-        background: $lightgrey;
-      }
-    }
-
-    p.selected {
-      font-size: 35px;
-      color: #000;
-    }
-
-    div.selected {
-      padding: 10px;
-
-      textarea {
-        width: 100%;
-        border: 0px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 20px;
-      }
-    }
-  }
-
-}
-
-.argie-tag {
-  background: $carnation-pink;
-  color: #FFF;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &::before {
-  }
 }
 
 #toolbar {

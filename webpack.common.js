@@ -26,9 +26,6 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, 'client/sass/'),
-        ],
         use: [{
           loader: "style-loader"
         }, {

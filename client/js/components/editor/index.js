@@ -10,15 +10,15 @@ import ArgieTagControls from './argie-tag-controls';
 //import argieMod, { insertCommandBlot } from './argieMod';
 import argieMod, { insertCommandBlot } from './argie-quill-module';
 
+require('./editor.scss');
+
 class Editor extends React.Component {
   componentDidMount() {
-    const toolbar = [];
-    //const toolbar = [
-        //[{ header: ['1', '2', '3', false] }],
-        //['bold', 'italic', 'underline'],
-        //['clean'],
-    //];
-    Quill.register('modules/argieMod', argieMod);
+    const toolbar = [
+        [{ header: ['1', '2', '3', false] }],
+        ['bold', 'italic', 'underline'],
+        ['clean'],
+    ];
     this.quill = new Quill('#editor', {
       theme: 'bubble',
       modules: {
@@ -26,6 +26,10 @@ class Editor extends React.Component {
         argieMod,
       },
     });
+
+    if (this.props.defaultValue) {
+      this.quill.setText(this.props.defaultValue.trimStart().trimEnd());
+    }
   }
 
   handleAddCommandClick = () => {
@@ -34,7 +38,7 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id='editor-container'>
         <ArgieTagControls
           quill={this.quill}
           onClick={this.handleAddCommandClick}

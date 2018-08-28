@@ -7,15 +7,17 @@ require('quill/dist/quill.snow.css');
 
 import ArgieTagControls from './argie-tag-controls';
 
-import argieMod from './argieMod';
+//import argieMod, { insertCommandBlot } from './argieMod';
+import argieMod, { insertCommandBlot } from './argie-quill-module';
 
 class Editor extends React.Component {
   componentDidMount() {
-    const toolbar = [
-        [{ header: ['1', '2', '3', false] }],
-        ['bold', 'italic', 'underline'],
-        ['clean'],
-    ];
+    const toolbar = [];
+    //const toolbar = [
+        //[{ header: ['1', '2', '3', false] }],
+        //['bold', 'italic', 'underline'],
+        //['clean'],
+    //];
     Quill.register('modules/argieMod', argieMod);
     this.quill = new Quill('#editor', {
       theme: 'bubble',
@@ -26,10 +28,17 @@ class Editor extends React.Component {
     });
   }
 
+  handleAddCommandClick = () => {
+    insertCommandBlot(this.quill);
+  }
+
   render() {
     return (
       <div>
-        <ArgieTagControls quill={this.quill} />
+        <ArgieTagControls
+          quill={this.quill}
+          onClick={this.handleAddCommandClick}
+        />
         <div id='editor'/>
       </div>
     );

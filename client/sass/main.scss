@@ -74,6 +74,30 @@ p {
 
 }
 
+.argie-tag {
+  background: $carnation-pink;
+  color: #FFF;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &::before {
+  }
+}
+
+#toolbar {
+  button.argie-toolbar {
+    width: inherit;
+    font-size: medium;
+  }
+}
+
 footer {
   margin: 0px;
   background-color: #EEE;

@@ -20,6 +20,12 @@
 
   #message-button-bar {
     margin-top: 20px;
+
+    .message-save-error {
+      color: #F00;
+      font-family: 'Montserrat';
+      font-size: 15px;
+    }
   }
 
 }

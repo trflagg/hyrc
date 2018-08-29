@@ -29,7 +29,11 @@ class SelectedMessage extends React.Component {
   }
 
   render() {
-    const { selectedMessage } = this.props;
+    const { selectedMessage,
+      messageBeingSaved,
+      messageSaveError,
+    } = this.props;
+
     if (!selectedMessage) {
       return null;
     }
@@ -53,9 +57,13 @@ class SelectedMessage extends React.Component {
           </div>
         </div>
         <div id="message-button-bar">
-          <button onClick={this.handleSave}>
+          <button onClick={this.handleSave} disabled={messageBeingSaved} >
             Save Message
           </button>
+          {messageSaveError &&
+          <p className='message-save-error'>
+            Error: {messageSaveError }
+          </p>}
         </div>
       </div>
     );
@@ -63,8 +71,14 @@ class SelectedMessage extends React.Component {
 }
 
 const mapStateToProps = state => {
+  const { selectedMessage,
+    messageBeingSaved,
+    messageSaveError } = state.messages;
+
   return {
-    selectedMessage: state.messages.selectedMessage,
+    selectedMessage,
+    messageBeingSaved,
+    messageSaveError,
   };
 }
 

@@ -32,6 +32,7 @@ module.exports = db => {
 
 function objectToClient(message) {
   return {
+    id: message.id(),
     name: message.getName(),
     text: message.getText(),
   }

@@ -19,12 +19,12 @@ export function startSavingMessage(message) {
   return { type: START_SAVING_MESSAGE, message };
 }
 
-export function saveMessageSuccessful(result) {
-  return { type: SAVE_MESSAGE_SUCCESSFUL, result };
+export function saveMessageSuccessful(message) {
+  return { type: SAVE_MESSAGE_SUCCESSFUL, message };
 }
 
-export function errorSavingMessage(error) {
-  return { type: ERROR_SAVING_MESSAGE, error };
+export function errorSavingMessage(error, message) {
+  return { type: ERROR_SAVING_MESSAGE, payload: {error, message} };
 }
 
 export function fetchAllMessages() {
@@ -34,6 +34,7 @@ export function fetchAllMessages() {
         messageList {
           name
           text
+          id
         }
       }
     `);
@@ -48,15 +49,23 @@ export function saveMessage(message) {
       mutation CreateOrUpdateMessage($message: MessageInput!) {
         createOrUpdateMessage(message: $message) {
           name
+          text
+          id
         }
       }
     `;
-    const variables = { message };
+    const variables = {
+      message: {
+        name: message.name,
+        text: message.text,
+        id: message.id,
+      }
+    };
     runQuery(query, variables).then(result => {
       // need to refer to mutation name to get the message data
       dispatch(saveMessageSuccessful(result.createOrUpdateMessage));
     }).catch(error => {
-      dispatch(errorSavingMessage(error));
+      dispatch(errorSavingMessage(error, message));
     });
   }
 }

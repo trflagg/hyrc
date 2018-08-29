@@ -4,11 +4,13 @@ type Query {
 }
 
 type Message {
+  id: String!
   name: String!
   text: String
 }
 
 input MessageInput {
+  id: String!
   name: String!
   text: String!
 }

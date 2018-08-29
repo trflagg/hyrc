@@ -10,6 +10,7 @@ class SelectedMessage extends React.Component {
 
   constructor(props) {
     super(props);
+    this.idHiddenRef = React.createRef();
     this.editorRef = React.createRef();
     this.nameInputRef = React.createRef();
   }
@@ -48,20 +49,24 @@ class SelectedMessage extends React.Component {
     return {
       name: this.nameInputRef.current.value,
       text: this.editorRef.current.getText(),
+      id: this.idHiddenRef.current.value,
     }
   }
 
   render() {
-    const { selectedMessage,
-      messageBeingSaved,
-      messageSaveError,
-    } = this.props;
+    const { selectedMessage } = this.props;
 
     if (!selectedMessage) {
       return null;
     }
+    console.log(`render ${JSON.stringify(selectedMessage)}`);
     return (
       <div id='selectedMessage'>
+        <input
+          ref={ this.idHiddenRef }
+          type='hidden'
+          value={ selectedMessage.id }
+        />
         <div className='field'>
           <p className='field-name'>name</p>
           <input
@@ -80,12 +85,15 @@ class SelectedMessage extends React.Component {
           </div>
         </div>
         <div id="message-button-bar">
-          <button onClick={this.handleSave} disabled={messageBeingSaved} >
+          <button
+            onClick={this.handleSave}
+            disabled={selectedMessage.messageBeingSaved}
+          >
             Save Message
           </button>
-          {messageSaveError &&
+          {selectedMessage.error &&
           <p className='message-save-error'>
-            Error: {messageSaveError }
+            Error: {selectedMessage.error }
           </p>}
         </div>
       </div>
@@ -94,14 +102,10 @@ class SelectedMessage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedMessage,
-    messageBeingSaved,
-    messageSaveError } = state.messages;
+  const { selectedMessage } = state.messages;
 
   return {
     selectedMessage,
-    messageBeingSaved,
-    messageSaveError,
   };
 }
 

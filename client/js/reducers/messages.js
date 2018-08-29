@@ -12,14 +12,19 @@ import {
 const initialState = {
   messageList: [],
   selectedMessage: null,
-  messageBeingSaved: null,
-  messageSaveError: null,
 };
 
 const messages = produce((draft, action) =>  {
   switch(action.type) {
     case SET_MESSAGE_LIST:
-      draft.messageList = action.messageList;
+      // turn array into object with id as property
+      let messageList = {};
+      action.messageList.forEach(message => {
+        messageList[message.id] = message;
+        messageList[message.id].beingSaved = false;
+        messageList[message.id].error = null;
+      });
+      draft.messageList = messageList;
       return;
 
     case SELECT_MESSAGE:
@@ -27,21 +32,26 @@ const messages = produce((draft, action) =>  {
       return;
 
     case START_SAVING_MESSAGE:
-      draft.messageBeingSaved = action.message.name;
-      // update message data in list
-      // TODO: change list to use name as index to avoid this search
-      const i = _.findIndex(draft.messageList, {name: action.message.name});
-      draft.messageList[i] = action.message;
+      // update data in messageList
+      draft.messageList[action.message.id] = action.message;
+      draft.messageList[action.message.id].beingSaved = true;
+      if (draft.selectedMessage.id === action.message.id) {
+        draft.selectedMessage = action.message;
+      }
       return;
 
     case SAVE_MESSAGE_SUCCESSFUL:
-      draft.messageBeingSaved = null;
-      draft.messageSaveError = null;
+      draft.messageList[action.message.id].beingSaved = false;
+      draft.messageList[action.message.id].error = null;
+      if (draft.selectedMessage.id === action.message.id) {
+        draft.selectedMessage = action.message;
+      }
       return;
 
     case ERROR_SAVING_MESSAGE:
       let errorMessage = 'An error ocurred.';
-      const error = _.get(action, 'error');
+      const message = _.get(action, 'payload.message');
+      const error = _.get(action, 'payload.error');
       if (error) {
         const errors = _.get(error, 'response.errors');
         if (errors && errors.length) {
@@ -53,7 +63,13 @@ const messages = produce((draft, action) =>  {
         }
       }
       draft.messageSaveError = errorMessage;
-      draft.messageBeingSaved = null;
+      if (message.id) {
+        draft.messageList[message.id].error = errorMessage;
+      }
+      if (draft.selectedMessage.id === message.id) {
+        draft.selectedMessage = message;
+        draft.selectedMessage.error = errorMessage;
+      }
       return;
   }
 }, initialState);

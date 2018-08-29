@@ -15,7 +15,7 @@ class MessageList extends React.Component {
     const { messageList, selectedMessage } = this.props;
     return (
       <div id='messageList'>
-        {messageList && messageList.map(message => (
+        {messageList && _.map(messageList, message => (
           <Message
             key={message.name}
             message={message}

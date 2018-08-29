@@ -28,6 +28,10 @@ const messages = produce((draft, action) =>  {
 
     case START_SAVING_MESSAGE:
       draft.messageBeingSaved = action.message.name;
+      // update message data in list
+      // TODO: change list to use name as index to avoid this search
+      const i = _.findIndex(draft.messageList, {name: action.message.name});
+      draft.messageList[i] = action.message;
       return;
 
     case SAVE_MESSAGE_SUCCESSFUL:

@@ -14,7 +14,26 @@ class SelectedMessage extends React.Component {
     this.nameInputRef = React.createRef();
   }
 
-  componentDidUpdate() {
+  // if we are switching to a new selected message
+  // before we commit the new one to the DOM,
+  // save the old one as a snapshot
+  getSnapshotBeforeUpdate(prevProps) {
+    if (prevProps.selectedMessage &&
+      prevProps.selectedMessage !== this.props.selectedMessage) {
+      return this.currentMessage;
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot !== null) {
+      // only save if message changed
+      if (snapshot.name !== prevProps.selectedMessage.name ||
+        snapshot.text !== prevProps.selectedMessage.text) {
+        this.props.saveMessage(snapshot);
+      }
+    }
+
     if (this.editorRef.current) {
       this.nameInputRef.current.value = this.props.selectedMessage.name;
       this.editorRef.current.setText(this.props.selectedMessage.text);
@@ -22,10 +41,14 @@ class SelectedMessage extends React.Component {
   }
 
   handleSave = () => {
-    this.props.saveMessage({
+    this.props.saveMessage(this.currentMessage);
+  }
+
+  get currentMessage() {
+    return {
       name: this.nameInputRef.current.value,
       text: this.editorRef.current.getText(),
-    });
+    }
   }
 
   render() {

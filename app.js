@@ -45,25 +45,29 @@ if (process.env.NODE_ENV === "production") {
   app.use(morgan('dev'));
 }
 
-// handler
-const graphQLRoot = require('./graphql/root.js')(db);
-const useGraphiQL = (process.env.NODE_ENV !== 'production');
-app.use('/graphql', graphqlHTTP({
-  schema: graphQLSchema,
-  rootValue: graphQLRoot,
-  graphiql: true,
-  pretty: true,
-}));
-
+// root sends index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// start it up
-let port = 3000
-if (process.env.NODE_ENV === 'production') {
-  port = 80;
-}
+// graphql handler
+// registers resolvers which includes handlers which register models
+// which may create indexes
+require('./graphql/root.js')(db).then(graphQLRoot => {
+  const useGraphiQL = (process.env.NODE_ENV !== 'production');
+  app.use('/graphql', graphqlHTTP({
+    schema: graphQLSchema,
+    rootValue: graphQLRoot,
+    graphiql: true,
+    pretty: true,
+  }));
 
-if (!module.parent) app.listen(port, () => console.log(`listening on ${port}!`));
 
+  // start it up
+  let port = 3000
+  if (process.env.NODE_ENV === 'production') {
+    port = 80;
+  }
+
+  if (!module.parent) app.listen(port, () => console.log(`listening on ${port}!`));
+});

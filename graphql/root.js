@@ -1,7 +1,7 @@
 
-module.exports = db => {
+module.exports = async db => {
 
-  const messageResolvers = require('./resolvers/messages')(db);
+  const messageResolvers = await require('./resolvers/messages')(db);
 
   return {
     hello: () => {

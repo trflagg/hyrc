@@ -1,5 +1,5 @@
-module.exports = db => {
-  const argieMessageHandlers = require('argie/handlers/messages')(db);
+module.exports = async db => {
+  const argieMessageHandlers = await require('argie/handlers/messages')(db);
 
   const resolvers = {
     messageList: async () => {

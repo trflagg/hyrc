@@ -14,13 +14,17 @@
     &:hover {
       cursor: pointer;
       padding-left: 10px;
-      color: #000;
     }
+
   }
 
   p.selected {
     font-size: 35px;
     color: #000;
+  }
+
+  p.error, p.selected.error {
+    color: #F00;
   }
 
   div.selected {

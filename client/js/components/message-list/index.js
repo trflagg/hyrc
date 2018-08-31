@@ -17,10 +17,10 @@ class MessageList extends React.Component {
       <div id='messageList'>
         {messageList && _.map(messageList, message => (
           <Message
-            key={message.name}
+            key={message.id}
             message={message}
             onClick={() => this.handleMessageClick(message)}
-            selected={selectedMessage && selectedMessage.name === message.name}
+            selected={selectedMessage && selectedMessage.id === message.id}
           />
         ))}
       </div>

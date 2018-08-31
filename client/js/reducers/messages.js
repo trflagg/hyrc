@@ -23,6 +23,7 @@ const messages = produce((draft, action) =>  {
         messageList[message.id] = message;
         messageList[message.id].beingSaved = false;
         messageList[message.id].error = null;
+        messageList[message.id].fieldErrors = null;
       });
       draft.messageList = messageList;
       return;
@@ -41,34 +42,42 @@ const messages = produce((draft, action) =>  {
       return;
 
     case SAVE_MESSAGE_SUCCESSFUL:
-      draft.messageList[action.message.id].beingSaved = false;
-      draft.messageList[action.message.id].error = null;
-      if (draft.selectedMessage.id === action.message.id) {
-        draft.selectedMessage = action.message;
+      const saveMessage = Object.assign({}, action.message);
+      saveMessage.beingSaved = false;
+      saveMessage.error = null;
+      saveMessage.fieldErrors = null;
+      draft.messageList[action.message.id] = saveMessage;
+      if (draft.selectedMessage.id === saveMessage.id) {
+        draft.selectedMessage = saveMessage;
       }
       return;
 
     case ERROR_SAVING_MESSAGE:
       let errorMessage = 'An error ocurred.';
-      const message = _.get(action, 'payload.message');
+
+      // message that we were trying to save
+      let message = Object.assign({}, _.get(action, 'payload.message'));
+
+      // error from the payload
       const error = _.get(action, 'payload.error');
       if (error) {
+        // may either be array in response.errors or message string
         const errors = _.get(error, 'response.errors');
+        // errors is an array, but we only look at the first entry
+        // TODO: loop through errors and concatenate all field errors & messages
         if (errors && errors.length) {
-          errorMessage = _.reduce(errors, (msg, error) =>
-            (msg + `${error.message} `)
-            , '');
+          errorMessage = errors[0].message;
+          message.fieldErrors = errors[0].state;
         } else if (error.message) {
           errorMessage = error.message;
         }
       }
+
       draft.messageSaveError = errorMessage;
-      if (message.id) {
-        draft.messageList[message.id].error = errorMessage;
-      }
+      message.error = errorMessage;
+      draft.messageList[message.id] = message;
       if (draft.selectedMessage.id === message.id) {
         draft.selectedMessage = message;
-        draft.selectedMessage.error = errorMessage;
       }
       return;
   }

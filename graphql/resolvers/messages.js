@@ -1,5 +1,6 @@
 module.exports = async db => {
   const argieMessageHandlers = await require('argie/handlers/messages')(db);
+  const ValidationError = require('../validation-error');
 
   const resolvers = {
     messageList: async () => {
@@ -21,9 +22,16 @@ module.exports = async db => {
     },
 
     createOrUpdateMessage: async req => {
-      const newMessage =
-        await argieMessageHandlers.createOrUpdateMessage(req.message);
-      return objectToClient(newMessage);
+      try {
+        const newMessage =
+          await argieMessageHandlers.createOrUpdateMessage(req.message);
+        return objectToClient(newMessage);
+      } catch (error) {
+        if (error.name === 'UserError') {
+          throw new ValidationError(error.state, error.message);
+        }
+        throw error;
+      }
     },
 
   };

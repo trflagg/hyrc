@@ -1,12 +1,13 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { saveMessage } from '../../actions/messages';
 
-import Editor from '../editor';
+import SelectedMessage from './selected-message';
 
 require('./selected-message.scss');
-class SelectedMessage extends React.Component {
+class SelectedMessageContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class SelectedMessage extends React.Component {
   // save the old one as a snapshot
   getSnapshotBeforeUpdate(prevProps) {
     if (prevProps.selectedMessage &&
-      prevProps.selectedMessage !== this.props.selectedMessage) {
+      prevProps.selectedMessage.id !== this.props.selectedMessage.id) {
       return this.currentMessage;
     }
     return null;
@@ -59,51 +60,21 @@ class SelectedMessage extends React.Component {
     if (!selectedMessage) {
       return null;
     }
-    console.log(`render ${JSON.stringify(selectedMessage)}`);
+
     return (
-      <div id='selectedMessage'>
-        <input
-          ref={ this.idHiddenRef }
-          type='hidden'
-          value={ selectedMessage.id }
-        />
-        <div className='field'>
-          <p className='field-name'>name</p>
-          <input
-            ref={ this.nameInputRef }
-            className='field-value'
-            defaultValue={ selectedMessage.name }
-          />
-        </div>
-        <div className='field'>
-          <p className='field-name'>text</p>
-          <div className='field-value'>
-            <Editor
-              ref={this.editorRef}
-              defaultValue={selectedMessage.text}
-            />
-          </div>
-        </div>
-        <div id="message-button-bar">
-          <button
-            onClick={this.handleSave}
-            disabled={selectedMessage.messageBeingSaved}
-          >
-            Save Message
-          </button>
-          {selectedMessage.error &&
-          <p className='message-save-error'>
-            Error: {selectedMessage.error }
-          </p>}
-        </div>
-      </div>
+      <SelectedMessage
+        selectedMessage = { selectedMessage }
+        onSave = {this.handleSave}
+        nameInputRef = { this.nameInputRef }
+        editorRef = { this.editorRef }
+        idHiddenRef = { this.idHiddenRef }
+      />
     );
   }
 }
 
 const mapStateToProps = state => {
   const { selectedMessage } = state.messages;
-
   return {
     selectedMessage,
   };
@@ -115,4 +86,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedMessage);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedMessageContainer);

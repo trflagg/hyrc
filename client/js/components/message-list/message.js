@@ -7,6 +7,7 @@ const Message = ({ message, onClick, selected }) => {
   const classes = classNames({
     'message': true,
     'selected': selected,
+    'error': message.error,
   });
 
   return (

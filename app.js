@@ -15,6 +15,8 @@ const graphQLSchema = require('./graphql/schema.js');
 
 const app = express()
 
+const isProduction = (process.env.NODE_ENV === 'production');
+
 // set up db connection
 let environment = require('./db-environment-default');
 if (process.env.DB_ENV === 'compose') {
@@ -26,8 +28,10 @@ console.log(`Connecting to ${hiddenDBString}`);
 const db = new Db(environment);
 console.log('Connected');
 
+
+
 // use webpack-dev-middle in dev
-if (process.env.NODE_ENV !== 'production') {
+if (!isProduction) {
   const compiler = webpack(webpackConfig);
   app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -39,7 +43,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.static('dist'));
 
 // logging
-if (process.env.NODE_ENV === "production") {
+if (isProduction) {
   app.use(morgan('short'));
 } else {
   app.use(morgan('dev'));
@@ -50,22 +54,38 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+
 // graphql handler
 // registers resolvers which includes handlers which register models
 // which may create indexes
 require('./graphql/root.js')(db).then(graphQLRoot => {
-  const useGraphiQL = (process.env.NODE_ENV !== 'production');
+
   app.use('/graphql', graphqlHTTP({
     schema: graphQLSchema,
     rootValue: graphQLRoot,
-    graphiql: true,
+    graphiql: !isProduction,
     pretty: true,
+    formatError: error => {
+      console.error(`graphql error: ${JSON.stringify(error, null, 2)}`);
+      if (error.originalError) {
+        console.error(`${JSON.stringify(error.originalError, null, 2)}`);
+      }
+      let graphqlErrorFormat = {
+        message: error.message,
+        state: error.originalError && error.originalError.state,
+      }
+      if (!isProduction) {
+        graphqlErrorFormat.locations = error.locations,
+        graphqlErrorFormat.stack = error.stack ? error.stack.split('\n') : [],
+        graphqlErrorFormat.path = error.path
+      }
+      return graphqlErrorFormat;
+    },
   }));
-
 
   // start it up
   let port = 3000
-  if (process.env.NODE_ENV === 'production') {
+  if (isProduction) {
     port = 80;
   }
 

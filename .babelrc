@@ -1,4 +1,9 @@
 {
   "presets": ["react", "env"],
-  "plugins": ["react-hot-loader/babel", "transform-class-properties"],
+  "plugins": ["react-hot-loader/babel", 
+    "transform-class-properties",
+    ["babel-plugin-transform-builtin-extend", {
+      globals: ["Error", "Array"]
+    }] 
+  ],
 }

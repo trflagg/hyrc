@@ -1,6 +1,8 @@
 import { runQuery } from '../graphql';
 import { wrapErrorHandler } from './index';
 
+import { clearGenericError } from './generic-error';
+
 export const SET_MESSAGE_LIST = 'SET_MESSAGE_LIST';
 export const SELECT_MESSAGE = 'SELECT_MESSAGE';
 export const START_SAVING_MESSAGE = 'START_SAVING_MESSAGE';
@@ -12,7 +14,10 @@ export function setMessageList(messageList) {
 };
 
 export function selectMessage(message) {
-  return { type: SELECT_MESSAGE, message };
+  return dispatch => {
+    dispatch(clearGenericError());
+    dispatch({ type: SELECT_MESSAGE, message });
+  }
 }
 
 export function startSavingMessage(message) {

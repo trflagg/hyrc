@@ -1,5 +1,7 @@
 import { runQuery } from '../graphql';
 
+import { createGenericError } from './generic-error';
+
 export const SET_HELLO_STRING = 'SET_HELLO_STRING';
 
 export function setHelloString(helloString) {
@@ -20,7 +22,7 @@ export function fetchHelloString() {
 
 export function wrapErrorHandler(fn) {
   return function(dispatch) {
-    fn(dispatch).catch(error => dispatch({ type: 'ERROR', error }));
+    fn(dispatch).catch(error => dispatch(createGenericError(error)));
   };
 };
 

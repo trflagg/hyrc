@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { produce } from 'immer';
 
+import { parseGraphQLError } from './generic-error';
+
 import {
   SELECT_MESSAGE,
   SET_MESSAGE_LIST,
@@ -53,27 +55,16 @@ const messages = produce((draft, action) =>  {
       return;
 
     case ERROR_SAVING_MESSAGE:
-      let errorMessage = 'An error ocurred.';
-
       // message that we were trying to save
       let message = Object.assign({}, _.get(action, 'payload.message'));
 
       // error from the payload
       const error = _.get(action, 'payload.error');
-      if (error) {
-        // may either be array in response.errors or message string
-        const errors = _.get(error, 'response.errors');
-        // errors is an array, but we only look at the first entry
-        // TODO: loop through errors and concatenate all field errors & messages
-        if (errors && errors.length) {
-          errorMessage = errors[0].message;
-          message.fieldErrors = errors[0].state;
-        } else if (error.message) {
-          errorMessage = error.message;
-        }
-      }
+      const { errorMessage, fieldErrors } = parseGraphQLError(error);
 
       draft.messageSaveError = errorMessage;
+
+      message.fieldErrors = fieldErrors;
       message.error = errorMessage;
       draft.messageList[message.id] = message;
       if (draft.selectedMessage.id === message.id) {

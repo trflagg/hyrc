@@ -10,6 +10,7 @@ import argieMod from './editor/argie-quill-module';
 
 import Header from './header';
 import MessageList from './message-list';
+import GenericError from './generic-error';
 import SelectedMessage from './selected-message';
 import FooterControls from './footer-controls';
 
@@ -26,7 +27,10 @@ class App extends React.Component {
         <Header />
         <div id="content">
           <MessageList />
-          <SelectedMessage />
+          <div id="detail">
+            <GenericError />
+            <SelectedMessage />
+          </div>
         </div>
         <FooterControls />
       </div>

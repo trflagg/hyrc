@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { saveMessage } from '../../actions/messages';
+import { saveMessage, deleteMessage } from '../../actions/messages';
 
 import SelectedMessage from './selected-message';
 
@@ -21,6 +21,7 @@ class SelectedMessageContainer extends React.Component {
   // save the old one as a snapshot
   getSnapshotBeforeUpdate(prevProps) {
     if (prevProps.selectedMessage &&
+      this.props.selectedMessage &&
       prevProps.selectedMessage.id !== this.props.selectedMessage.id) {
       return this.currentMessage;
     }
@@ -36,7 +37,7 @@ class SelectedMessageContainer extends React.Component {
       }
     }
 
-    if (this.editorRef.current) {
+    if (this.editorRef.current && this.props.selectedMessage) {
       this.nameInputRef.current.value = this.props.selectedMessage.name;
       this.editorRef.current.setText(this.props.selectedMessage.text);
     }
@@ -45,6 +46,13 @@ class SelectedMessageContainer extends React.Component {
   handleSave = () => {
     this.props.saveMessage(this.currentMessage);
   }
+
+  handleDelete = () => {
+    if (confirm(`Are you sure you want to delete message ${this.props.selectedMessage.name}?\n THIS CANNOT BE UNDONE!`)) {
+      this.props.deleteMessage(this.currentMessage);
+    }
+  }
+
 
   get currentMessage() {
     return {
@@ -65,6 +73,7 @@ class SelectedMessageContainer extends React.Component {
       <SelectedMessage
         selectedMessage = { selectedMessage }
         onSave = {this.handleSave}
+        onDelete = {this.handleDelete}
         nameInputRef = { this.nameInputRef }
         editorRef = { this.editorRef }
         idHiddenRef = { this.idHiddenRef }
@@ -82,7 +91,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveMessage: message => dispatch(saveMessage(message))
+    saveMessage: message => dispatch(saveMessage(message)),
+    deleteMessage: message => dispatch(deleteMessage(message))
   }
 }
 

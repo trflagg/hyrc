@@ -7,6 +7,7 @@ import Editor from '../editor';
 const SelectedMessage = props => {
   const { selectedMessage,
     onSave,
+    onDelete,
     nameInputRef,
     editorRef,
     idHiddenRef
@@ -62,11 +63,17 @@ const SelectedMessage = props => {
           >
             Save Message
           </button>
+          <button
+            className='deleteButton'
+            onClick={onDelete}
+          >
+            Delete Message
+          </button>
+        </div>
           {selectedMessage.error &&
           <p className='error'>
             Error: {selectedMessage.error }
           </p>}
-        </div>
       </div>
   );
 }

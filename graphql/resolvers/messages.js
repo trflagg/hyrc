@@ -34,6 +34,10 @@ module.exports = async db => {
       }
     },
 
+    deleteMessage: async req => {
+      await argieMessageHandlers.deleteMessage(req.message);
+      return req.message;
+    }
   };
   return resolvers;
 }

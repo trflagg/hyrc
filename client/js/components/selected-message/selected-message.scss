@@ -23,6 +23,15 @@
 
   #message-button-bar {
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .deleteButton {
+      align-self: flex-end;
+      &:hover {
+        background-color: #F00;
+      }
+    }
 
   }
 

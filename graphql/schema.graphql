@@ -16,7 +16,6 @@ input MessageInput {
 }
 
 type Mutation {
-  createMessage(message: MessageInput!): Message!
-  updateMessage(message: MessageInput!): Message!
   createOrUpdateMessage(message: MessageInput!): Message!
+  deleteMessage(message: MessageInput!): Message!
 }

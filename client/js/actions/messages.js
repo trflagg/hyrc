@@ -46,6 +46,28 @@ export function fetchAllMessages() {
     dispatch(setMessageList(data.messageList));
   });
 }
+export function deleteMessage(message) {
+  return wrapErrorHandler(async dispatch => {
+    const query = `
+      mutation DeleteMessage($message: MessageInput!) {
+        deleteMessage(message: $message) {
+          id
+        }
+
+      }
+    `;
+    const variables = {
+      message: {
+        id: message.id,
+        name: message.name,
+        text: message.text,
+      }
+    };
+    const result = await runQuery(query, variables);
+    dispatch(fetchAllMessages());
+    dispatch(selectMessage(null));
+  });
+}
 
 export function saveMessage(message) {
   return async dispatch => {

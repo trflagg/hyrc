@@ -12,7 +12,7 @@ class MessageList extends React.Component {
   }
 
   render() {
-    const { messageList, selectedMessage } = this.props;
+    const { messageList, selectedMessageId } = this.props;
     return (
       <div id='messageList'>
         {messageList && _.map(messageList, message => (
@@ -20,7 +20,7 @@ class MessageList extends React.Component {
             key={message.id}
             message={message}
             onClick={() => this.handleMessageClick(message)}
-            selected={selectedMessage && selectedMessage.id === message.id}
+            selected={selectedMessageId && selectedMessageId === message.id}
           />
         ))}
       </div>
@@ -31,7 +31,7 @@ class MessageList extends React.Component {
 const mapStateToProps = state => {
   return {
     messageList: state.messages.messageList,
-    selectedMessage: state.messages.selectedMessage,
+    selectedMessageId: state.messages.selectedMessageId,
   };
 }
 

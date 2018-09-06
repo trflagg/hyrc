@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   messageList: [],
-  selectedMessage: null,
+  selectedMessageId: null,
 };
 
 const messages = produce((draft, action) =>  {
@@ -31,16 +31,13 @@ const messages = produce((draft, action) =>  {
       return;
 
     case SELECT_MESSAGE:
-      draft.selectedMessage = action.message;
+      draft.selectedMessageId = action.message.id;
       return;
 
     case START_SAVING_MESSAGE:
       // update data in messageList
       draft.messageList[action.message.id] = action.message;
       draft.messageList[action.message.id].beingSaved = true;
-      if (draft.selectedMessage.id === action.message.id) {
-        draft.selectedMessage = action.message;
-      }
       return;
 
     case SAVE_MESSAGE_SUCCESSFUL:
@@ -49,9 +46,6 @@ const messages = produce((draft, action) =>  {
       saveMessage.error = null;
       saveMessage.fieldErrors = null;
       draft.messageList[action.message.id] = saveMessage;
-      if (draft.selectedMessage.id === saveMessage.id) {
-        draft.selectedMessage = saveMessage;
-      }
       return;
 
     case ERROR_SAVING_MESSAGE:
@@ -67,9 +61,6 @@ const messages = produce((draft, action) =>  {
       message.fieldErrors = fieldErrors;
       message.error = errorMessage;
       draft.messageList[message.id] = message;
-      if (draft.selectedMessage.id === message.id) {
-        draft.selectedMessage = message;
-      }
       return;
   }
 }, initialState);

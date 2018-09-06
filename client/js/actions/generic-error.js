@@ -1,3 +1,4 @@
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const ERROR = 'ERROR';
 
 export function createGenericError(error) {
@@ -5,5 +6,5 @@ export function createGenericError(error) {
 }
 
 export function clearGenericError() {
-  return { type: ERROR, error: null };
+  return { type: CLEAR_ERROR };
 }

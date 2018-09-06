@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-import { ERROR } from '../actions/generic-error';
+import { CLEAR_ERROR, ERROR } from '../actions/generic-error';
 
 const initialState = {
   message: null,
@@ -8,6 +8,10 @@ const initialState = {
 
 const errors = produce((draft, action) => {
   switch(action.type) {
+    case CLEAR_ERROR:
+      draft.message = null;
+      return;
+
     case ERROR:
       if (action.error === null) {
         draft.message = null;

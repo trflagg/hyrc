@@ -20,9 +20,9 @@ class SelectedMessageContainer extends React.Component {
   // before we commit the new one to the DOM,
   // save the old one as a snapshot
   getSnapshotBeforeUpdate(prevProps) {
-    if (prevProps.selectedMessage &&
-      this.props.selectedMessage &&
-      prevProps.selectedMessage.id !== this.props.selectedMessage.id) {
+    if (prevProps.selectedMessageId &&
+      this.props.selectedMessageId &&
+      prevProps.selectedMessageId !== this.props.selectedMessageId) {
       return this.currentMessage;
     }
     return null;
@@ -31,15 +31,18 @@ class SelectedMessageContainer extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (snapshot !== null) {
       // only save if message changed
-      if (snapshot.name !== prevProps.selectedMessage.name ||
-        snapshot.text !== prevProps.selectedMessage.text) {
+      const { messageList, selectedMessageId } = prevProps;
+      const prevSelectedMessage = messageList[selectedMessageId];
+      if (snapshot.name !== prevSelectedMessage.name ||
+        snapshot.text !== prevSelectedMessage.text) {
         this.props.saveMessage(snapshot);
       }
     }
 
-    if (this.editorRef.current && this.props.selectedMessage) {
-      this.nameInputRef.current.value = this.props.selectedMessage.name;
-      this.editorRef.current.setText(this.props.selectedMessage.text);
+    if (this.editorRef.current && this.props.selectedMessageId) {
+      const selectedMessage = this.props.messageList[this.props.selectedMessageId];
+      this.nameInputRef.current.value = selectedMessage.name;
+      this.editorRef.current.setText(selectedMessage.text);
     }
   }
 
@@ -48,8 +51,9 @@ class SelectedMessageContainer extends React.Component {
   }
 
   handleDelete = () => {
-    if (confirm(`Are you sure you want to delete message ${this.props.selectedMessage.name}?\n THIS CANNOT BE UNDONE!`)) {
-      this.props.deleteMessage(this.currentMessage);
+    const message = this.currentMessage;
+    if (confirm(`Are you sure you want to delete message ${message.name}?\n THIS CANNOT BE UNDONE!`)) {
+      this.props.deleteMessage(message);
     }
   }
 
@@ -63,11 +67,13 @@ class SelectedMessageContainer extends React.Component {
   }
 
   render() {
-    const { selectedMessage } = this.props;
+    const { selectedMessageId, messageList } = this.props;
 
-    if (!selectedMessage) {
+    if (!selectedMessageId) {
       return null;
     }
+
+    const selectedMessage = messageList[selectedMessageId];
 
     return (
       <SelectedMessage
@@ -83,9 +89,10 @@ class SelectedMessageContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedMessage } = state.messages;
+  const { selectedMessageId, messageList } = state.messages;
   return {
-    selectedMessage,
+    selectedMessageId,
+    messageList,
   };
 }
 

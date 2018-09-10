@@ -2,19 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 const Quill = require('quill/dist/quill.min.js');
 
-import style from '../../sass/main.scss';
+import style from '../../../sass/main.scss';
 
-import { fetchAllMessages } from '../actions/messages';
+import { fetchAllMessages } from '../../actions/messages';
 
 import argieMod from './editor/argie-quill-module';
 
-import Header from './header';
+import Header from '../header';
+import GenericError from '../generic-error';
 import MessageList from './message-list';
-import GenericError from './generic-error';
 import SelectedMessage from './selected-message';
 import FooterControls from './footer-controls';
 
-class App extends React.Component {
+class MessageEditor extends React.Component {
 
   componentDidMount() {
     this.props.fetchAllMessages();
@@ -44,6 +44,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const AppConnected = connect(null, mapDispatchToProps)(App);
-export default AppConnected;
+const MessageEditorConnected = connect(null, mapDispatchToProps)(MessageEditor);
+export default MessageEditorConnected;
 

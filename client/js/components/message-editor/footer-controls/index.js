@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { createNewMessage } from '../../actions/messages';
+import { createNewMessage } from '../../../actions/messages';
 
 import NewMessageButton from './new-message-button';
 

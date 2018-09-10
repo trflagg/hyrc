@@ -4,12 +4,12 @@ import { hot } from 'react-hot-loader';
 
 import store from '../store';
 
-import App from './app';
+import MessageEditor from './message-editor';
 
 const AppContainer = () => {
   return (
     <Provider store={store}>
-      <App />
+      <MessageEditor />
     </Provider>
   );
 }

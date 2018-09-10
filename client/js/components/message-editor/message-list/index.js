@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { selectMessage } from '../../actions/messages';
+import { selectMessage } from '../../../actions/messages';
 
 require('./message-list.scss');
 import Message from './message';

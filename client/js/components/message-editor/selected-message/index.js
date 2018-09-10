@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { saveMessage, deleteMessage } from '../../actions/messages';
+import { saveMessage, deleteMessage } from '../../../actions/messages';
 
 import SelectedMessage from './selected-message';
 

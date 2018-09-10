@@ -9,6 +9,7 @@ import {
   START_SAVING_MESSAGE,
   SAVE_MESSAGE_SUCCESSFUL,
   ERROR_SAVING_MESSAGE,
+  NEW_MESSAGE,
 } from '../actions/messages';
 
 const initialState = {
@@ -31,7 +32,19 @@ const messages = produce((draft, action) =>  {
       return;
 
     case SELECT_MESSAGE:
-      draft.selectedMessageId = action.message.id;
+      if (action.message) {
+        draft.selectedMessageId = action.message.id;
+      } else {
+        draft.selectedMessageId = null;
+      }
+      return;
+
+    case NEW_MESSAGE:
+      draft.messageList[action.message.id] = {
+        id: action.message.id,
+        name: 'NEW_MESSAGE',
+        text: '',
+      }
       return;
 
     case START_SAVING_MESSAGE:

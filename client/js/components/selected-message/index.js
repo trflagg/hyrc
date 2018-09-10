@@ -57,7 +57,6 @@ class SelectedMessageContainer extends React.Component {
     }
   }
 
-
   get currentMessage() {
     return {
       name: this.nameInputRef.current.value,

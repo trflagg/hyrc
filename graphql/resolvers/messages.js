@@ -12,20 +12,14 @@ module.exports = async db => {
 
     createMessage: async req => {
       const newMessage = await argieMessageHandlers.createMessage(req.message);
-      return objectToClient(newMessage);
+      return { id: newMessage.id().toString() };
     },
 
     updateMessage: async req => {
-      const updatedMessage =
-        await argieMessageHandlers.updateMessage(req.message);
-      return objectToClient(updatedMessage);
-    },
-
-    createOrUpdateMessage: async req => {
       try {
-        const newMessage =
+        const updatedMessage =
           await argieMessageHandlers.createOrUpdateMessage(req.message);
-        return objectToClient(newMessage);
+        return objectToClient(updatedMessage);
       } catch (error) {
         if (error.name === 'UserError') {
           throw new ValidationError(error.state, error.message);

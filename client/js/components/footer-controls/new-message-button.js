@@ -2,7 +2,7 @@ import React from 'react';
 
 const NewMessageButton = props => {
   return (
-    <button>
+    <button onClick={props.onClick}>
       New Message
     </button>
   );

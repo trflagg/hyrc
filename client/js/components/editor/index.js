@@ -35,7 +35,9 @@ class Editor extends React.Component {
   }
 
   setText = text => {
-    this.quill.setText(text.trimStart().trimEnd());
+    if (text) {
+      this.quill.setText(text.trimStart().trimEnd());
+    }
   }
 
   handleAddCommandClick = () => {

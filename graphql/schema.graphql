@@ -9,13 +9,18 @@ type Message {
   text: String
 }
 
-input MessageInput {
+type MessageId {
   id: String!
+}
+
+input MessageInput {
+  id: String
   name: String!
   text: String!
 }
 
 type Mutation {
-  createOrUpdateMessage(message: MessageInput!): Message!
+  createMessage: MessageId!
+  updateMessage(message: MessageInput!): Message!
   deleteMessage(message: MessageInput!): Message!
 }

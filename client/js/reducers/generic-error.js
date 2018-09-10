@@ -28,15 +28,21 @@ export function parseGraphQLError(error) {
   let fieldErrors = {};
 
   if (error) {
-    // may either be array in response.errors or message string
+    // may either be array in response.errors or in message and state props
     const errors = _.get(error, 'response.errors');
     // errors is an array, but we only look at the first entry
     // TODO: loop through errors and concatenate all field errors & messages
     if (errors && errors.length) {
       errorMessage = errors[0].message;
       fieldErrors = errors[0].state;
-    } else if (error.message) {
-      errorMessage = error.message;
+    } else {
+      // simpler handling
+      if (error.message) {
+        errorMessage = error.message;
+      }
+      if (error.state) {
+        fieldErrors = error.state;
+      }
     }
   }
 

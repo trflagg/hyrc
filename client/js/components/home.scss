@@ -1,0 +1,22 @@
+#home {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+
+  table.link-table {
+    max-width: 500px;
+    border-collapse: collapse;
+
+    td {
+      min-width: 100%;
+      list-style-type: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 30px;
+      padding: 20px;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

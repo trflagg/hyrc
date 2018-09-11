@@ -1,6 +1,18 @@
 type Query {
   hello: String
   messageList: [Message]!
+  character: Character!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+type Character {
+  id: String!
+  name: String!
+  gender: Gender
 }
 
 type Message {

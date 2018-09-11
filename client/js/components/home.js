@@ -12,13 +12,14 @@ const Home = () => {
       <Header />
       <div id="home">
 
-        <table class='link-table'>
+        <table className='link-table'>
           <thead>
             <tr><td> Jump to page: </td></tr>
           </thead>
 
           <tbody>
             <tr><td> <Link to="/messages">Edit Messages</Link> </td></tr>
+            <tr><td> <Link to="/character">Edit Character</Link> </td></tr>
           </tbody>
         </table>
 

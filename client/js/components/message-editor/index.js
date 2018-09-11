@@ -1,11 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-const Quill = require('quill/dist/quill.min.js');
 
 import style from '../../../sass/main.scss';
 
-import { fetchAllMessages } from '../../actions/messages';
-
+const Quill = require('quill/dist/quill.min.js');
 import argieMod from './editor/argie-quill-module';
 
 import Header from '../header';
@@ -15,17 +12,15 @@ import SelectedMessage from './selected-message';
 import FooterControls from './footer-controls';
 
 class MessageEditor extends React.Component {
-
   componentDidMount() {
-    this.props.fetchAllMessages();
     Quill.register('modules/argieMod', argieMod);
   }
 
   render() {
     return (
-      <div id="pageContainer">
+      <div className="pageContainer">
         <Header />
-        <div id="content">
+        <div className="content">
           <MessageList />
           <div id="detail">
             <GenericError />
@@ -38,12 +33,5 @@ class MessageEditor extends React.Component {
   };
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchAllMessages: () => { dispatch(fetchAllMessages()) },
-  }
-}
-
-const MessageEditorConnected = connect(null, mapDispatchToProps)(MessageEditor);
-export default MessageEditorConnected;
+export default MessageEditor;
 

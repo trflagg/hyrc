@@ -6,7 +6,6 @@ import './character-editor.scss';
 
 import { saveCharacter } from '../../actions/character';
 
-import Header from '../header';
 import CharacterEditor from './character-editor-form';
 
 class CharacterEditorContainer extends React.Component {
@@ -16,8 +15,7 @@ class CharacterEditorContainer extends React.Component {
 
   render() {
     return (
-      <div id="character-editor" className='pageContainer'>
-        <Header />
+      <div id="character-editor" className='content'>
         <h1>Edit Character</h1>
         <CharacterEditor
           initialValues={this.props.initialValues}

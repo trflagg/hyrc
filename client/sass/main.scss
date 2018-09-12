@@ -6,12 +6,6 @@ body {
   margin: 0px;
 }
 
-.pageContainer {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 35px;
@@ -48,15 +42,18 @@ button {
   }
 }
 
+.pageContainer {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .content {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 10px;
   display: flex;
   justify-content: space-between;
-}
-
-#detail {
-  flex: 3
+  flex-direction: column;
 }
 
 #toolbar {
@@ -64,11 +61,4 @@ button {
     width: inherit;
     font-size: medium;
   }
-}
-
-footer {
-  margin: 0px;
-  background-color: #EEE;
-  padding: 10px;
-
 }

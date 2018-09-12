@@ -6,7 +6,7 @@ const CharacterEditor = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
 
   return (
-    <form className='content' onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="firstName">First Name</label>
         <Field

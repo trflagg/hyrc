@@ -1,12 +1,10 @@
 import React from 'react';
 
-import style from '../../../sass/main.scss';
+require('./message-editor.scss');
 
 const Quill = require('quill/dist/quill.min.js');
 import argieMod from './editor/argie-quill-module';
 
-import Header from '../header';
-import GenericError from '../generic-error';
 import MessageList from './message-list';
 import SelectedMessage from './selected-message';
 import FooterControls from './footer-controls';
@@ -18,13 +16,13 @@ class MessageEditor extends React.Component {
 
   render() {
     return (
-      <div className="pageContainer">
-        <Header />
+      <div id="message-editor">
         <div className="content">
-          <MessageList />
-          <div id="detail">
-            <GenericError />
-            <SelectedMessage />
+          <div className="message-master-detail">
+            <MessageList />
+            <div id="detail">
+              <SelectedMessage />
+            </div>
           </div>
         </div>
         <FooterControls />

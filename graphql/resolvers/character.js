@@ -1,17 +1,42 @@
 module.exports = async db => {
-  const ValidationError = require('../validation-error');
+  const argieCharacterHandlers = await require('argie/handlers/character')(db);
 
   const resolvers = {
     character: async () => {
-      return {
-        id: '1234567890',
-        name: 'Taylor the Bold',
-        gender: 'FEMALE',
+      try {
+        const loadedCharacter = await argieCharacterHandlers.getCharacter();
+        return objectToClient(loadedCharacter);
+      } catch(e) {
+        if (e.name === 'NotFoundError') {
+          const newCharacter = argieCharacterHandlers.newCharacter();
+          newCharacter.setFirstName('New');
+          newCharacter.setLastName('Character');
+          newCharacter.setGender('FEMALE');
+          return objectToClient(newCharacter);
+        } else {
+          throw e;
+        }
       }
-    }
+    },
+
+    updateCharacter: async req => {
+      const character = await
+        argieCharacterHandlers.createOrUpdateCharacter(req.character);
+      console.log(JSON.stringify(character));
+      return objectToClient(character);
+    },
   }
 
   return resolvers;
+}
+
+function objectToClient(character) {
+  return {
+    firstName: character.firstName(),
+    lastName: character.lastName(),
+    gender: character.gender(),
+    id: character.id(),
+  }
 }
 
 

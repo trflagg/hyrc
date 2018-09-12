@@ -52,7 +52,11 @@ if (isProduction) {
 // root sends index.html
 // for now, hardode the react routes
 // TODO: server-side rendering
-app.get(['/', '/messages/', '/character'], (req, res) => {
+app.get(['/',
+  '/messages/',
+  '/character',
+  '/play'
+], (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 

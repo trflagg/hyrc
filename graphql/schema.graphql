@@ -11,8 +11,9 @@ enum Gender {
 
 type Character {
   id: String!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
+  lastResult: String
   gender: Gender
 }
 
@@ -44,4 +45,5 @@ type Mutation {
   updateMessage(message: MessageInput!): Message!
   deleteMessage(message: MessageInput!): Message!
   updateCharacter(character: CharacterInput!): Character!
+  restartGame(character: CharacterInput!): Character!
 }

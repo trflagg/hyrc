@@ -25,6 +25,12 @@ module.exports = async db => {
       console.log(JSON.stringify(character));
       return objectToClient(character);
     },
+
+    restartGame: async req => {
+      const character = await
+        argieCharacterHandlers.restartGame(req.character);
+      return objectToClient(character);
+    }
   }
 
   return resolvers;
@@ -35,6 +41,7 @@ function objectToClient(character) {
     firstName: character.firstName(),
     lastName: character.lastName(),
     gender: character.gender(),
+    lastResult: character.lastResult,
     id: character.id(),
   }
 }

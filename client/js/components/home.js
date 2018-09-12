@@ -18,6 +18,7 @@ const Home = () => {
           </thead>
 
           <tbody>
+            <tr><td> <Link to="/play">Play Game</Link> </td></tr>
             <tr><td> <Link to="/messages">Edit Messages</Link> </td></tr>
             <tr><td> <Link to="/character">Edit Character</Link> </td></tr>
           </tbody>

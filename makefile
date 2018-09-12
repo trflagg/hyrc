@@ -15,3 +15,7 @@ update-compose-fixtures:
 				--network=hyrc_default \
 				node:9.9.0 \
 				node --harmony /usr/src/app/node_modules/argie/messageLoader ../../db-environment-compose.js
+
+sync-argie:
+	rsync -vr ../argie node_modules/
+

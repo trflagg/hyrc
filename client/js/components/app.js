@@ -8,6 +8,8 @@ import { loadCharacter } from '../actions/character';
 import Home from './home';
 import MessageEditor from './message-editor';
 import CharacterEditor from './character-editor';
+import PlayGame from './play';
+
 
 class App extends React.Component {
   componentDidMount() {
@@ -18,6 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
+        <Route path="/play" component={PlayGame} />
         <Route path="/messages" component={MessageEditor} />
         <Route path="/character" component={CharacterEditor} />
         <Route path="/" component={Home} />

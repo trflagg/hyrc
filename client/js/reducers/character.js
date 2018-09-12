@@ -16,6 +16,7 @@ const character = produce((draft, action) => {
       return;
     case PARSE_MESSAGE_RESULT:
       draft.character.lastResult = action.character.lastResult;
+      draft.character.commands = action.character.commands;
       return;
   }
 }, initialState);

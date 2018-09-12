@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { restartGame, loadCharacter } from '../../actions/character';
+require('./play-game.scss');
+
+import { restartGame, loadCharacter, runMessageText } from '../../actions/character';
 
 class PlayGame extends React.Component {
   componentDidMount() {
@@ -14,14 +16,32 @@ class PlayGame extends React.Component {
     this.props.restartGame(this.props.character);
   }
 
+  handleCommandClick = commandText => {
+    this.props.runMessageText(this.props.character, commandText);
+  }
+
   render() {
     const lastResult = _.get(this.props.character, 'lastResult', '');
+    const commands = _.get(this.props.character, 'commands', []);
 
     return (
-      <div className='contents output'>
-        {lastResult &&
-          <p>{lastResult}</p>
-        }
+      <div id="play-game" className='content'>
+        <div className='output'>
+          {lastResult &&
+            <p>{lastResult}</p>
+          }
+        </div>
+
+        <div className='commands'>
+          {commands.map((command, i) => (
+            <button
+              key={i}
+              onClick={() => this.handleCommandClick(command.text)}
+            >
+              {command.text}
+            </button>
+          ))}
+        </div>
 
         <button onClick={this.handleRestartGameClick}>
           Restart Game
@@ -42,6 +62,9 @@ const mapDispatchToProps = dispatch => {
   return {
     restartGame: character => { dispatch(restartGame(character)) },
     loadCharacter: () => { dispatch(loadCharacter()) },
+    runMessageText: (character, messageText) => {
+      dispatch(runMessageText(character, messageText))
+    },
   }
 };
 

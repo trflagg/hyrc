@@ -23,6 +23,9 @@ export function loadCharacter() {
           gender
           lastResult
           id
+          commands {
+            text
+          }
         }
       }
     `);
@@ -64,6 +67,9 @@ export function restartGame(character) {
         restartGame(character: $character) {
           id
           lastResult
+          commands {
+            text
+          }
         }
       }
     `;
@@ -79,6 +85,28 @@ export function restartGame(character) {
   });
 }
 
-
-
+export function runMessageText(character, messageText) {
+  return wrapErrorHandler(async dispatch => {
+    const query = `
+      mutation RunMessage($character: CharacterInput!, $message: String) {
+        runMessage(character: $character, message: $message) {
+          id
+          lastResult
+          commands {
+            text
+          }
+        }
+      }
+    `;
+    const variables = {
+      character: {
+        id: character.id,
+      },
+      message: messageText,
+    };
+    runQuery(query, variables).then(result => {
+      dispatch(parseMessageResultAction(result.runMessage));
+    });
+  });
+}
 

@@ -13,8 +13,14 @@ type Character {
   id: String!
   firstName: String
   lastName: String
-  lastResult: String
   gender: Gender
+  lastResult: String
+  commands: [Command]
+}
+
+type Command {
+  text: String
+  unread: Boolean
 }
 
 type Message {
@@ -46,4 +52,5 @@ type Mutation {
   deleteMessage(message: MessageInput!): Message!
   updateCharacter(character: CharacterInput!): Character!
   restartGame(character: CharacterInput!): Character!
+  runMessage(character: CharacterInput!, message: String): Character!
 }

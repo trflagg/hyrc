@@ -10,7 +10,7 @@ import GenericError from './generic-error';
 import Home from './home';
 import MessageEditor from './message-editor';
 import CharacterEditor from './character-editor';
-import PlayGame from './play';
+import PlayGame from './play-game';
 
 require('../../sass/main.scss');
 

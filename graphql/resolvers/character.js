@@ -22,7 +22,6 @@ module.exports = async db => {
     updateCharacter: async req => {
       const character = await
         argieCharacterHandlers.createOrUpdateCharacter(req.character);
-      console.log(JSON.stringify(character));
       return objectToClient(character);
     },
 
@@ -30,7 +29,13 @@ module.exports = async db => {
       const character = await
         argieCharacterHandlers.restartGame(req.character);
       return objectToClient(character);
-    }
+    },
+
+    runMessage: async req => {
+      const character = await
+        argieCharacterHandlers.runMessage(req.character, req.message);
+      return objectToClient(character);
+    },
   }
 
   return resolvers;
@@ -42,6 +47,7 @@ function objectToClient(character) {
     lastName: character.lastName(),
     gender: character.gender(),
     lastResult: character.lastResult,
+    commands: character.getCommandTextList(),
     id: character.id(),
   }
 }

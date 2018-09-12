@@ -1,0 +1,21 @@
+header {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+  }
+
+  .left-side {
+    a {
+      font-size: 20px;
+      margin-left: 20px;
+      font-family: 'Montserrat Alternates', sans-serif;
+      text-decoration: none;
+    }
+  }
+}
+

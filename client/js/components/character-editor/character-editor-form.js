@@ -1,8 +1,16 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-const CharacterEditor = props => {
+type Props = {
+  handleSubmit: () => mixed,
+  pristine: boolean,
+  reset: () => mixed,
+  submitting: boolean,
+}
+
+const CharacterEditor = (props:Props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
 
   return (

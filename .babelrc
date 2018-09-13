@@ -1,5 +1,5 @@
 {
-  "presets": ["react", "env"],
+  "presets": ["react", "env", "flow"],
   "plugins": ["react-hot-loader/babel", 
     "transform-class-properties",
     ["babel-plugin-transform-builtin-extend", {

@@ -5,8 +5,9 @@ require('quill/dist/quill.core.css');
 require('quill/dist/quill.bubble.css');
 require('quill/dist/quill.snow.css');
 
-import argieMod from '../../../lib/argie-quill-mod/index.ts';
+import argieMod, { insertFirstName } from '../../../lib/argie-quill-mod/index.tsx';
 require('./editor.scss');
+import Toolbar from './toolbar';
 
 class Editor extends React.Component {
   componentDidMount() {
@@ -14,6 +15,7 @@ class Editor extends React.Component {
     this.quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
+        toolbar: '#toolbar',
         argieMod,
       },
     });
@@ -33,13 +35,14 @@ class Editor extends React.Component {
     }
   }
 
-  handleAddCommandClick = () => {
-    insertCommandBlot(this.quill);
+  handleFirstNameClick = () => {
+    insertFirstName(this.quill);
   }
 
   render() {
     return (
       <div id='editor-container'>
+        <Toolbar onFirstNameClick={this.handleFirstNameClick} />
         <div id='editor'/>
       </div>
     );

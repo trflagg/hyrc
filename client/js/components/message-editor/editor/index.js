@@ -5,22 +5,15 @@ require('quill/dist/quill.core.css');
 require('quill/dist/quill.bubble.css');
 require('quill/dist/quill.snow.css');
 
-//import argieMod, { insertCommandBlot } from './argieMod';
-import argieMod, { insertCommandBlot } from './argie-quill-module';
-
+import argieMod from '../../../lib/argie-quill-mod/index.ts';
 require('./editor.scss');
 
 class Editor extends React.Component {
   componentDidMount() {
-    const toolbar = [
-        [{ header: ['1', '2', '3', false] }],
-        ['bold', 'italic', 'underline'],
-        ['clean'],
-    ];
+    Quill.register('modules/argieMod', argieMod);
     this.quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
-        toolbar,
         argieMod,
       },
     });

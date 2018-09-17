@@ -2,16 +2,12 @@ import React from 'react';
 
 require('./message-editor.scss');
 
-const Quill = require('quill/dist/quill.min.js');
-import argieMod from './editor/argie-quill-module';
-
 import MessageList from './message-list';
 import SelectedMessage from './selected-message';
 import FooterControls from './footer-controls';
 
 class MessageEditor extends React.Component {
   componentDidMount() {
-    Quill.register('modules/argieMod', argieMod);
   }
 
   render() {

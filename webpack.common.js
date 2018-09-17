@@ -4,6 +4,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+      },
+      {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'client/js/'),
@@ -12,6 +16,9 @@ module.exports = {
           {
             loader: 'babel-loader',
           },
+          {
+            loader: 'source-map-loader',
+          }
         ]
       },
       {

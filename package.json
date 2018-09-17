@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/trflagg/hyrc#readme",
   "dependencies": {
+    "@types/node": "^10.10.1",
+    "@types/quill": "^1.3.10",
     "argie": "https://github.com/trflagg/argie",
     "argieDB": "https://github.com/trflagg/argiedb",
+    "awesome-typescript-loader": "^5.2.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -47,6 +50,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "require-text": "0.0.1",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.0.3",
     "uglifyjs-webpack-plugin": "^1.3.0",
     "webpack": "^4.16.5",
     "webpack-merge": "^4.1.4"

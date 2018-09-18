@@ -3,11 +3,23 @@
 #selectedMessage {
   height: inherit;
   overflow-y: scroll;
+  font-family: 'Montserrat', sans-serif;
 
   .field {
     .field-name {
       font-size: 12px;
       width: 100%;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    input {
+      flex: 0 1;
+      margin-right: 5px;
+      width: inherit;
     }
   }
 

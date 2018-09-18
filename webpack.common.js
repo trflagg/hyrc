@@ -6,6 +6,9 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader',
+        include: [
+          path.resolve(__dirname, 'client/js/'),
+        ],
       },
       {
         test: /\.js$/,

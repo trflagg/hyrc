@@ -8,6 +8,8 @@ const SelectedMessage = props => {
   const { selectedMessage,
     onSave,
     onDelete,
+    useAdvancedEditor,
+    onUseAdvancedEditorChanged,
     nameInputRef,
     editorRef,
     idHiddenRef
@@ -47,8 +49,19 @@ const SelectedMessage = props => {
             <Editor
               ref={ editorRef }
               defaultValue={selectedMessage.text}
+              useAdvanced={ useAdvancedEditor }
             />
           </div>
+          <label className='row'>
+            <input
+              type='checkbox'
+              checked={useAdvancedEditor}
+              value={'Use Advanced Editor'}
+              onChange={onUseAdvancedEditorChanged}
+              name='use-advanced-editor'
+            />
+            Use Advanced Editor
+          </label>
           { selectedMessage.fieldErrors &&
             selectedMessage.fieldErrors.text &&
             <p className='error'>

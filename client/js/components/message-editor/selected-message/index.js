@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { saveMessage, deleteMessage } from '../../../actions/messages';
+import { setUseAdvancedEditorAction } from '../../../actions/settings';
 
 import SelectedMessage from './selected-message';
 
@@ -65,8 +66,16 @@ class SelectedMessageContainer extends React.Component {
     }
   }
 
+  handleUseAdvancedEditorChanged = (e) => {
+    this.props.setUseAdvancedEditor(e.target.checked);
+  }
+
   render() {
-    const { selectedMessageId, messageList } = this.props;
+    const {
+      selectedMessageId,
+      messageList,
+      useAdvancedEditor,
+    } = this.props;
 
     if (!selectedMessageId) {
       return null;
@@ -76,12 +85,14 @@ class SelectedMessageContainer extends React.Component {
 
     return (
       <SelectedMessage
-        selectedMessage = { selectedMessage }
-        onSave = {this.handleSave}
-        onDelete = {this.handleDelete}
-        nameInputRef = { this.nameInputRef }
-        editorRef = { this.editorRef }
-        idHiddenRef = { this.idHiddenRef }
+        selectedMessage={ selectedMessage }
+        onSave={ this.handleSave }
+        onDelete={ this.handleDelete }
+        nameInputRef={ this.nameInputRef }
+        editorRef={ this.editorRef }
+        idHiddenRef={ this.idHiddenRef }
+        useAdvancedEditor={ useAdvancedEditor }
+        onUseAdvancedEditorChanged={ this.handleUseAdvancedEditorChanged }
       />
     );
   }
@@ -89,16 +100,20 @@ class SelectedMessageContainer extends React.Component {
 
 const mapStateToProps = state => {
   const { selectedMessageId, messageList } = state.messages;
+  const { useAdvancedEditor } = state.settings;
   return {
     selectedMessageId,
     messageList,
+    useAdvancedEditor,
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     saveMessage: message => dispatch(saveMessage(message)),
-    deleteMessage: message => dispatch(deleteMessage(message))
+    deleteMessage: message => dispatch(deleteMessage(message)),
+    setUseAdvancedEditor: useAdvancedEditor =>
+      dispatch(setUseAdvancedEditorAction(useAdvancedEditor)),
   }
 }
 

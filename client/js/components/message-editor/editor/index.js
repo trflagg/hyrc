@@ -26,7 +26,26 @@ class Editor extends React.Component {
   }
 
   getText = () => {
-    return this.quill.getText();
+    const contents = this.getContents();
+    const ops = _.get(contents, 'ops', []);
+    let text = '';
+    _.forEach(ops, operation => {
+      if(operation.insert) {
+        switch(typeof operation.insert) {
+          case 'string':
+            text = text + operation.insert;
+            break;
+          case 'object':
+            text = text + `<%= avatar.getGlobal('${operation.insert.global}') %>`;
+            break;
+        }
+      }
+    });
+    return text;
+  }
+
+  getContents = () => {
+    return this.quill.getContents();
   }
 
   setText = text => {

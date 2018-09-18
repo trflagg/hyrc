@@ -74,7 +74,7 @@ function idNum(className: string, id: string): number {
 }
 
 class GlobalEmbed extends InlineEmbed {
-  static create() {
+  static create(globalName: string) {
     let node = super.create();
     ReactDOM.render(
       <GlobalEmbedComponent />,
@@ -82,11 +82,11 @@ class GlobalEmbed extends InlineEmbed {
     );
     const newId = idForClassName('argie-global');
     node.setAttribute('id', newId);
-      console.log(`create id ${newId}`);
     node.classList.add('argie-tag');
     node.classList.add('argie-global');
     node.setAttribute('contenteditable', 'false');
     node.setAttribute('draggable', 'true');
+    node.dataset.globalName = globalName;
     let thisBlot: GlobalEmbed = this;
     node.addEventListener('dragstart', e => {
         e.dataTransfer.effectAllowed = 'move';
@@ -94,6 +94,10 @@ class GlobalEmbed extends InlineEmbed {
         e.dataTransfer.setData('type', 'global');
     });
     return node;
+  }
+
+  static value(node) {
+    return node.dataset.globalName;
   }
 }
 GlobalEmbed.blotName = 'global';
@@ -103,7 +107,7 @@ QuillScript.register(GlobalEmbed);
 export function insertFirstName(quill: Quill) {
   if (quill) {
     let range: RangeStatic = quill.getSelection(true);
-    quill.insertEmbed(range.index + 1, 'global', QuillScript.sources.USER);
+    quill.insertEmbed(range.index + 1, 'global', 'firstName', QuillScript.sources.USER);
     quill.setSelection(range.index + 2, 0);
   }
 }

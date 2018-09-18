@@ -41,9 +41,11 @@ class SelectedMessageContainer extends React.Component {
     }
 
     if (this.editorRef.current && this.props.selectedMessageId) {
-      const selectedMessage = this.props.messageList[this.props.selectedMessageId];
-      this.nameInputRef.current.value = selectedMessage.name;
-      this.editorRef.current.setText(selectedMessage.text);
+      if (this.props.selectedMessageId !== prevProps.selectedMessageId) {
+        const selectedMessage = this.props.messageList[this.props.selectedMessageId];
+        this.nameInputRef.current.value = selectedMessage.name;
+        this.editorRef.current.setText(selectedMessage.text);
+      }
     }
   }
 

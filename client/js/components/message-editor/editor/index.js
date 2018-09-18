@@ -9,11 +9,24 @@ class Editor extends React.Component {
     this.editorRef = React.createRef();
   }
 
-  setText(text) {
+  getSnapshotBeforeUpdate(prevProps) {
+    return this.getText();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // set text from snapshot if we switch editor type
+    if (snapshot !== null) {
+      if (prevProps.useAdvanced !== this.props.useAdvanced) {
+        this.setText(snapshot);
+      }
+    }
+  }
+
+  setText = text => {
     this.editorRef.current.setText(text);
   }
 
-  getText() {
+  getText = () => {
     return this.editorRef.current.getText();
   }
 

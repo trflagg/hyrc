@@ -12,18 +12,20 @@ class ArgieModule {
     quill.root.addEventListener('dragover', e => {
       e.preventDefault();
       const range: RangeStatic = rangeFromEvent(e, quill);
-      console.log(`dragover: ${JSON.stringify(range)}`);
       quill.setSelection((range.index + 1), 0);
     });
 
     quill.root.addEventListener('drop', e => {
       e.preventDefault();
       const range: RangeStatic = rangeFromEvent(e, quill);
-      console.log(`drop: ${JSON.stringify(range)}`);
       const type = e.dataTransfer.getData('type');
-      quill.insertEmbed(range.index, type, QuillScript.sources.USER);
+      let args = '';
+      if (type === 'global') {
+        args = e.dataTransfer.getData('globalName');
+      }
+
+      quill.insertEmbed(range.index, type, args, QuillScript.sources.USER);
       const oldNode = document.getElementById(e.dataTransfer.getData('id'));
-      console.log(`old_id ${e.dataTransfer.id}`);
       const oldOffset = QuillScript.find(oldNode).offset(quill.scroll);
       quill.editor.deleteText(oldOffset, 1, QuillScript.sources.USER);
       quill.update();
@@ -77,7 +79,7 @@ class GlobalEmbed extends InlineEmbed {
   static create(globalName: string) {
     let node = super.create();
     ReactDOM.render(
-      <GlobalEmbedComponent />,
+      <GlobalEmbedComponent globalName={globalName} />,
       node
     );
     const newId = idForClassName('argie-global');
@@ -92,6 +94,7 @@ class GlobalEmbed extends InlineEmbed {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('id', e.target.id);
         e.dataTransfer.setData('type', 'global');
+        e.dataTransfer.setData('globalName', globalName);
     });
     return node;
   }
@@ -107,7 +110,12 @@ QuillScript.register(GlobalEmbed);
 export function insertFirstName(quill: Quill) {
   if (quill) {
     let range: RangeStatic = quill.getSelection(true);
-    quill.insertEmbed(range.index + 1, 'global', 'firstName', QuillScript.sources.USER);
+    quill.insertEmbed(
+      range.index, 
+      'global', 
+      'firstName', 
+      QuillScript.sources.USER
+    );
     quill.setSelection(range.index + 2, 0);
   }
 }

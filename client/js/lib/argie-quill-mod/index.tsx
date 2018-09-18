@@ -20,6 +20,7 @@ class ArgieModule {
       const range: RangeStatic = rangeFromEvent(e, quill);
       const type = e.dataTransfer.getData('type');
       let args = '';
+
       if (type === 'global') {
         args = e.dataTransfer.getData('globalName');
       }
@@ -111,9 +112,22 @@ export function insertFirstName(quill: Quill) {
   if (quill) {
     let range: RangeStatic = quill.getSelection(true);
     quill.insertEmbed(
-      range.index, 
-      'global', 
-      'firstName', 
+      range.index,
+      'global',
+      'firstName',
+      QuillScript.sources.USER
+    );
+    quill.setSelection(range.index + 2, 0);
+  }
+}
+
+export function insertLastName(quill: Quill) {
+  if (quill) {
+    let range: RangeStatic = quill.getSelection(true);
+    quill.insertEmbed(
+      range.index,
+      'global',
+      'lastName',
       QuillScript.sources.USER
     );
     quill.setSelection(range.index + 2, 0);

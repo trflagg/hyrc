@@ -6,7 +6,10 @@ require('quill/dist/quill.core.css');
 require('quill/dist/quill.bubble.css');
 require('quill/dist/quill.snow.css');
 
-import argieMod, { insertFirstName } from '../../../lib/argie-quill-mod/index.tsx';
+import argieMod, {
+  insertFirstName,
+  insertLastName,
+} from '../../../lib/argie-quill-mod/index.tsx';
 require('./editor.scss');
 import Toolbar from './toolbar';
 
@@ -112,10 +115,17 @@ class DragAndDropEditor extends React.Component {
     insertFirstName(this.quill);
   }
 
+  handleLastNameClick = () => {
+    insertLastName(this.quill);
+  }
+
   render() {
     return (
       <div id='editor-container'>
-        <Toolbar onFirstNameClick={this.handleFirstNameClick} />
+        <Toolbar
+          onFirstNameClick={this.handleFirstNameClick}
+          onLastNameClick={this.handleLastNameClick}
+        />
         <div id='editor'/>
       </div>
     );

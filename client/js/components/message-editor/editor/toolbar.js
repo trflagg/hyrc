@@ -9,6 +9,12 @@ const Toolbar = props => {
       >
         First Name
       </button>
+      <button
+        onClick={props.onLastNameClick}
+        className={"argie-toolbar ql-toolbar"}
+      >
+       Last Name
+      </button>
     </div>
   );
 }

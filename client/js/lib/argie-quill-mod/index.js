@@ -11,13 +11,13 @@ class ArgieModule {
   constructor(quill, options) {
     quill.root.addEventListener('dragover', e => {
       e.preventDefault();
-      const range: RangeStatic = rangeFromEvent(e, quill);
+      const range = rangeFromEvent(e, quill);
       quill.setSelection((range.index + 1), 0);
     });
 
     quill.root.addEventListener('drop', e => {
       e.preventDefault();
-      const range: RangeStatic = rangeFromEvent(e, quill);
+      const range = rangeFromEvent(e, quill);
       const type = e.dataTransfer.getData('type');
       let args = '';
 
@@ -37,15 +37,12 @@ export default ArgieModule;
 
 function rangeFromEvent(e, quill) {
   let native;
-  // avoids typescript complaining about caretRangeFromPoint not existing
-  // on document
-  const doc: any = document;
 
-  if (doc.caretRangeFromPoint) {
-    native = doc.caretRangeFromPoint(e.clientX, e.clientY);
-  } else if (doc.caretPositionFromPoint) {
-    const position = doc.caretPositionFromPoint(e.clientX, e.clientY);
-    native = doc.createRange();
+  if (document.caretRangeFromPoint) {
+    native = document.caretRangeFromPoint(e.clientX, e.clientY);
+  } else if (document.caretPositionFromPoint) {
+    const position = document.caretPositionFromPoint(e.clientX, e.clientY);
+    native = document.createRange();
     native.setStart(position.offsetNode, position.offset);
     native.setEnd(position.offsetNode, position.offset);
   } else {
@@ -55,11 +52,11 @@ function rangeFromEvent(e, quill) {
   return quill.selection.normalizedToRange(normalized);
 }
 
-function idForClassName(className: string): string {
+function idForClassName(className) {
   return `${className}_${nextHighestId(className)}`;
 }
 
-function nextHighestId(className: string): number {
+function nextHighestId(className) {
   const blots = Array.from(document.getElementsByClassName(className));
   if (blots.length === 0) {
     return 1;
@@ -67,7 +64,7 @@ function nextHighestId(className: string): number {
   return _.max(_.map(blots, blot => (idNum(className, blot.id)))) + 1;
 }
 
-function idNum(className: string, id: string): number {
+function idNum(className, id) {
   const numInId = new RegExp(`${className}_(\\d+)`);
   const idNum = id.match(numInId);
   if (idNum && idNum.length && idNum.length > 1) {
@@ -77,7 +74,7 @@ function idNum(className: string, id: string): number {
 }
 
 class GlobalEmbed extends InlineEmbed {
-  static create(globalName: string) {
+  static create(globalName) {
     let node = super.create();
     ReactDOM.render(
       <GlobalEmbedComponent globalName={globalName} />,
@@ -90,7 +87,7 @@ class GlobalEmbed extends InlineEmbed {
     node.setAttribute('contenteditable', 'false');
     node.setAttribute('draggable', 'true');
     node.dataset.globalName = globalName;
-    let thisBlot: GlobalEmbed = this;
+    let thisBlot = this;
     node.addEventListener('dragstart', e => {
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('id', e.target.id);
@@ -108,9 +105,9 @@ GlobalEmbed.blotName = 'global';
 GlobalEmbed.tagName = 'span';
 QuillScript.register(GlobalEmbed);
 
-export function insertFirstName(quill: Quill) {
+export function insertFirstName(quill) {
   if (quill) {
-    let range: RangeStatic = quill.getSelection(true);
+    let range = quill.getSelection(true);
     quill.insertEmbed(
       range.index,
       'global',
@@ -121,9 +118,9 @@ export function insertFirstName(quill: Quill) {
   }
 }
 
-export function insertLastName(quill: Quill) {
+export function insertLastName(quill) {
   if (quill) {
-    let range: RangeStatic = quill.getSelection(true);
+    let range = quill.getSelection(true);
     quill.insertEmbed(
       range.index,
       'global',

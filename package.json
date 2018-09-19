@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/trflagg/hyrc#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.4",
+    "@fortawesome/free-solid-svg-icons": "^5.3.1",
+    "@fortawesome/react-fontawesome": "^0.1.3",
     "@types/node": "^10.10.1",
     "@types/quill": "^1.3.10",
     "@types/react": "^16.4.14",

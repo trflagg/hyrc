@@ -7,13 +7,19 @@ const Toolbar = props => {
         onClick={props.onFirstNameClick}
         className={"argie-toolbar ql-toolbar"}
       >
-        First Name
+       firstName
       </button>
       <button
         onClick={props.onLastNameClick}
         className={"argie-toolbar ql-toolbar"}
       >
-       Last Name
+        lastName
+      </button>
+      <button
+        onClick={props.onCustomGlobalClick}
+        className={"argie-toolbar ql-toolbar"}
+      >
+        custom
       </button>
     </div>
   );

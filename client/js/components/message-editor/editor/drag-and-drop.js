@@ -11,6 +11,7 @@ import argieMod, {
   textToDelta,
   insertFirstName,
   insertLastName,
+  insertCustomGlobal,
 } from '../../../lib/argie-quill-mod/index';
 require('./editor.scss');
 import Toolbar from './toolbar';
@@ -56,12 +57,17 @@ class DragAndDropEditor extends React.Component {
     insertLastName(this.quill);
   }
 
+  handleCustomGlobalClick = () => {
+    insertCustomGlobal(this.quill);
+  }
+
   render() {
     return (
       <div id='editor-container'>
         <Toolbar
           onFirstNameClick={this.handleFirstNameClick}
           onLastNameClick={this.handleLastNameClick}
+          onCustomGlobalClick={this.handleCustomGlobalClick}
         />
         <div id='editor'/>
       </div>

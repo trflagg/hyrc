@@ -14,10 +14,15 @@ import {
 import GetGlobalBlotComponent from './components/get-global-blot';
 
 class GetGlobalBlot extends InlineEmbed {
-  static create(globalName) {
+  static create(args) {
     let node = super.create();
+    const globalName = args.globalName || '';
+    const editable = args.editable || false;
     ReactDOM.render(
-      <GetGlobalBlotComponent globalName={globalName} />,
+      <GetGlobalBlotComponent
+        globalName={globalName}
+        editable={editable}
+      />,
       node
     );
     const newId = idForClassName('argie-global');
@@ -50,7 +55,16 @@ class GetGlobalBlot extends InlineEmbed {
   static modifyDeltaWithRegExResults(delta, results) {
     if (_.get(results, 'length', 0) > 1) {
       const globalName = results[1];
-      delta.insert({getGlobal: globalName});
+      let editable = true;
+      // shamefully, editable must be hardcoded based on globalName
+      // in the future, maybe make it a second argument to avatar.getGlobal?
+      if (globalName === 'lastName' || globalName === 'firstName') {
+        editable = false;
+      }
+      delta.insert({getGlobal: {
+        globalName,
+        editable
+      }});
     }
     return delta;
   }
@@ -60,13 +74,32 @@ GetGlobalBlot.tagName = 'span';
 
 export default GetGlobalBlot;
 
+export function insertCustomGlobal(quill) {
+  if (quill) {
+    let range = quill.getSelection(true);
+    quill.insertEmbed(
+      range.index,
+      'getGlobal',
+      {
+        globalName: 'custom',
+        editable: true,
+      },
+      QuillScript.sources.USER
+    );
+    quill.setSelection(range.index + 2, 0);
+  }
+}
+
 export function insertFirstName(quill) {
   if (quill) {
     let range = quill.getSelection(true);
     quill.insertEmbed(
       range.index,
       'getGlobal',
-      'firstName',
+      {
+        globalName: 'firstName',
+        editable: false,
+      },
       QuillScript.sources.USER
     );
     quill.setSelection(range.index + 2, 0);
@@ -79,7 +112,10 @@ export function insertLastName(quill) {
     quill.insertEmbed(
       range.index,
       'getGlobal',
-      'lastName',
+      {
+        globalName: 'lastName',
+        editable: false,
+      },
       QuillScript.sources.USER
     );
     quill.setSelection(range.index + 2, 0);

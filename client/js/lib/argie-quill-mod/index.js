@@ -106,6 +106,6 @@ function modifyDeltaWithTemplateString(delta, templateString) {
   return delta;
 }
 
-export { insertFirstName, insertLastName } from './get-global-blot';
+export { insertFirstName, insertLastName, insertCustomGlobal } from './get-global-blot';
 export default ArgieModule;
 

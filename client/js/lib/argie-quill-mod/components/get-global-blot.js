@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const GlobalEmbed = (props) => {
+const GetGlobalBlot = (props) => {
   return (
     <span>
       {props.globalName}
@@ -9,4 +9,4 @@ const GlobalEmbed = (props) => {
   );
 }
 
-export default GlobalEmbed;
+export default GetGlobalBlot;

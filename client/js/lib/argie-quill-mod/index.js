@@ -22,10 +22,12 @@ class ArgieModule {
       e.preventDefault();
       const range = rangeFromEvent(e, quill);
       const type = e.dataTransfer.getData('type');
-      let args = '';
+      let args = {};
 
       if (type === 'getGlobal') {
-        args = e.dataTransfer.getData('globalName');
+        args.globalName = e.dataTransfer.getData('globalName');
+        // dataTransfer data can come across as string representation of boolean
+        args.editable = (e.dataTransfer.getData('editable').toString() === 'true');
       }
 
       quill.insertEmbed(range.index, type, args, QuillScript.sources.USER);
@@ -42,14 +44,15 @@ QuillScript.register(GetGlobalBlot);
 export function deltaToText(ops) {
   let text = '';
   _.forEach(ops, operation => {
-    if(operation.insert) {
-      switch(typeof operation.insert) {
+    const insert = operation.insert;
+    if(insert) {
+      switch(typeof insert) {
         case 'string':
-          text = text + operation.insert;
+          text = text + insert;
           break;
         case 'object':
-          if (operation.insert.hasOwnProperty('getGlobal')) {
-            text = text + GetGlobalBlot.templateString(operation.insert);
+          if (insert.hasOwnProperty('getGlobal')) {
+            text = text + GetGlobalBlot.templateString(insert.getGlobal);
           }
           break;
       }

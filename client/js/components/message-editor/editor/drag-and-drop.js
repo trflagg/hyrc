@@ -13,7 +13,9 @@ import argieMod, {
   insertLastName,
   insertCustomGlobal,
 } from '../../../lib/argie-quill-mod/index';
+
 require('./editor.scss');
+
 import Toolbar from './toolbar';
 
 class DragAndDropEditor extends React.Component {

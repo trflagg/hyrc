@@ -20,34 +20,24 @@ class GetGlobalBlot extends InlineEmbed {
     const editable = args.editable || false;
     ReactDOM.render(
       <GetGlobalBlotComponent
-        globalName={globalName}
+        defaultGlobalName={globalName}
         editable={editable}
+        node={node}
       />,
       node
     );
-    const newId = idForClassName('argie-global');
-    node.setAttribute('id', newId);
-    node.classList.add('argie-tag');
-    node.classList.add('argie-global');
-    node.setAttribute('contenteditable', 'false');
-    node.setAttribute('draggable', 'true');
-    node.dataset.globalName = globalName;
-    let thisBlot = this;
-    node.addEventListener('dragstart', e => {
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('id', e.target.id);
-        e.dataTransfer.setData('type', 'getGlobal');
-        e.dataTransfer.setData('globalName', globalName);
-    });
     return node;
   }
 
   static value(node) {
-    return node.dataset.globalName;
+    return {
+      globalName: node.dataset.globalName,
+      editable: node.dataset.editable,
+    }
   }
 
-  static templateString(insertOperation) {
-    return `<%= avatar.getGlobal('${insertOperation.getGlobal}') %>`;
+  static templateString(blotInsertObject) {
+    return `<%= avatar.getGlobal('${blotInsertObject.globalName}') %>`;
   }
 
   static regEx = /getGlobal\(\'(\w+)\'\)/;

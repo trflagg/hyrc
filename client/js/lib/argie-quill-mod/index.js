@@ -8,6 +8,8 @@ const InlineEmbed = QuillScript.import('blots/embed');
 import { Quill, RangeStatic } from 'quill';
 
 import GetGlobalBlot from './get-global-blot';
+import SetGlobalBlot from './set-global-blot';
+
 import { rangeFromEvent } from './utils';
 
 class ArgieModule {
@@ -28,6 +30,9 @@ class ArgieModule {
         args.globalName = e.dataTransfer.getData('globalName');
         // dataTransfer data can come across as string representation of boolean
         args.editable = (e.dataTransfer.getData('editable').toString() === 'true');
+      } else if (type === 'setGlobal') {
+        args.globalName = e.dataTransfer.getData('globalName');
+        args.value = e.dataTransfer.getData('value');
       }
 
       quill.insertEmbed(range.index, type, args, QuillScript.sources.USER);
@@ -40,6 +45,7 @@ class ArgieModule {
 }
 
 QuillScript.register(GetGlobalBlot);
+QuillScript.register(SetGlobalBlot);
 
 export function deltaToText(ops) {
   let text = '';
@@ -53,6 +59,8 @@ export function deltaToText(ops) {
         case 'object':
           if (insert.hasOwnProperty('getGlobal')) {
             text = text + GetGlobalBlot.templateString(insert.getGlobal);
+          } else if (insert.hasOwnProperty('setGlobal')) {
+            text = text + SetGlobalBlot.templateString(insert.setGlobal);
           }
           break;
       }
@@ -66,7 +74,7 @@ export function textToDelta(text) {
   let delta = new Delta;
   // convert text into deltas by parsing template strings into blots
   while(currentText !== '') {
-    // get start of next template
+    // get start of next template string
     const nextStartIndex = currentText.indexOf('<%');
     if (nextStartIndex === -1) {
       // no template string, push the rest of the text
@@ -93,22 +101,28 @@ export function textToDelta(text) {
 }
 
 function modifyDeltaWithTemplateString(delta, templateString) {
-  const blots = [ GetGlobalBlot ];
+  const blots = [ GetGlobalBlot, SetGlobalBlot ];
 
   // check string against each blot's regEx
+  let found = false;
   for (const blot of blots) {
     const results = blot.regEx.exec(templateString);
     // if there is a match, call blot's method
     if(results) {
       delta = blot.modifyDeltaWithRegExResults(delta, results);
-    } else {
-      // template string not handled, insert as text
-      delta.insert(templateString);
+      found = true;
     }
+  }
+
+  if (!found) {
+    // template string not handled, insert as text
+    delta.insert(templateString);
   }
   return delta;
 }
 
 export { insertFirstName, insertLastName, insertCustomGlobal } from './get-global-blot';
+export { insertSetGlobal } from './set-global-blot';
+
 export default ArgieModule;
 

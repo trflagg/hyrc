@@ -11,37 +11,69 @@ import {
   idNum,
 } from './utils';
 
-import GetGlobalBlotComponent from './components/set-global-blot';
+import SetGlobalBlotComponent from './components/set-global-blot';
 
-class GetGlobalBlot extends InlineEmbed {
-  static create(globalName) {
+class SetGlobalBlot extends InlineEmbed {
+  static create(args) {
     let node = super.create();
+    const globalName = args.globalName || '';
+    const value = args.value || '';
+
     ReactDOM.render(
-      <GetGlobalBlotComponent globalName={globalName} />,
+      <SetGlobalBlotComponent
+        defaultGlobalName={globalName}
+        defaultValue={value}
+        node={node}
+      />,
       node
     );
-    const newId = idForClassName('argie-global');
-    node.setAttribute('id', newId);
-    node.classList.add('argie-tag');
-    node.classList.add('argie-global');
-    node.setAttribute('contenteditable', 'false');
-    node.setAttribute('draggable', 'true');
-    node.dataset.globalName = globalName;
-    let thisBlot = this;
-    node.addEventListener('dragstart', e => {
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('id', e.target.id);
-        e.dataTransfer.setData('type', 'global');
-        e.dataTransfer.setData('globalName', globalName);
-    });
     return node;
   }
 
   static value(node) {
-    return node.dataset.globalName;
+    return {
+      globalName: node.dataset.globalName,
+      value: node.dataset.value,
+    }
+  }
+
+  static templateString(blotInsertObject) {
+    return `<% avatar.setGlobal('${blotInsertObject.globalName}', '${blotInsertObject.value}') %>`;
+  }
+
+  // matches avatar.setGlobal('[globalName]', '[value]')
+  static regEx = /setGlobal\(\'(.*)\'\,\s*\'(.*)\'\)/;
+
+  static modifyDeltaWithRegExResults(delta, results) {
+    if (_.get(results, 'length', 0) > 1) {
+      const globalName = results[1];
+      const value = results[2];
+      delta.insert({setGlobal: {
+        globalName,
+        value,
+      }});
+    }
+    return delta;
   }
 }
-GetGlobalBlot.blotName = 'global';
-GetGlobalBlot.tagName = 'span';
+SetGlobalBlot.blotName = 'setGlobal';
+SetGlobalBlot.tagName = 'span';
 
-export default GetGlobalBlot;
+export default SetGlobalBlot;
+
+export function insertSetGlobal(quill) {
+  if (quill) {
+    let range = quill.getSelection(true);
+    quill.insertEmbed(
+      range.index,
+      'setGlobal',
+      {
+        globalName: 'editme',
+        value: 'true',
+      },
+      QuillScript.sources.USER
+    );
+    quill.setSelection(range.index + 2, 0);
+  }
+}
+

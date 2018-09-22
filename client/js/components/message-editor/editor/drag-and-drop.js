@@ -12,6 +12,7 @@ import argieMod, {
   insertFirstName,
   insertLastName,
   insertCustomGlobal,
+  insertSetGlobal,
 } from '../../../lib/argie-quill-mod/index';
 
 require('./editor.scss');
@@ -63,6 +64,10 @@ class DragAndDropEditor extends React.Component {
     insertCustomGlobal(this.quill);
   }
 
+  handleSetGlobalClick = () => {
+    insertSetGlobal(this.quill);
+  }
+
   render() {
     return (
       <div id='editor-container'>
@@ -70,6 +75,7 @@ class DragAndDropEditor extends React.Component {
           onFirstNameClick={this.handleFirstNameClick}
           onLastNameClick={this.handleLastNameClick}
           onCustomGlobalClick={this.handleCustomGlobalClick}
+          onSetGlobalClick={this.handleSetGlobalClick}
         />
         <div id='editor'/>
       </div>

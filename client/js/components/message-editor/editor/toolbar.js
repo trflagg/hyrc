@@ -21,6 +21,12 @@ const Toolbar = props => {
       >
         custom
       </button>
+      <button
+        onClick={props.onSetGlobalClick}
+        className={"argie-toolbar ql-toolbar"}
+      >
+        set global
+      </button>
     </div>
   );
 }

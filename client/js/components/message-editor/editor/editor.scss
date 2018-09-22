@@ -1,5 +1,7 @@
 @import '../../../../sass/colors.scss';
 
+$EDITOR_TEXT_SIZE: 15px;
+
 #editor-container {
 }
 
@@ -8,18 +10,21 @@
 
   .ql-editor {
     height: inherit;
+    p {
+      font-size: $EDITOR_TEXT_SIZE;
+    }
   }
 }
 
 
-.argie-tag {
+#editor .argie-tag {
   background: $cornflower-blue;
   color: #FFF;
-  padding: 10px;
+  padding: 0px 10px;
   margin: 5px;
   border-radius: 10px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-size: $EDITOR_TEXT_SIZE;
 
   &:hover {
     cursor: pointer;
@@ -36,6 +41,7 @@
     background: $cornflower-blue;
     color: #FFF;
     border: none;
+    font-size: $EDITOR_TEXT_SIZE;
   }
 }
 
